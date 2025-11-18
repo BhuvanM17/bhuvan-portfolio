@@ -12,15 +12,15 @@ export default function AIPortfolio() {
   const lastSectionRef = useRef('home');
 
 
-  // Section descriptions for typing effect
   const sectionTexts = {
-    home: "Welcome to my AI portfolio. I build intelligent systems that think and deliver.",
-    about: "AI-driven Software Engineer specializing in intelligent systems and full-stack development.",
-    projects: "Featured projects: Cognito-Agent AI Chatbot, Healthcare Systems, and E-commerce platforms.",
-    skills: "Tech stack: AI/ML, Java, Spring, React, Python, LLM Integration, and more.",
-    experience: "AI Developer @ BizzHub | Prompt Engineer @ Analogica | BE Computer Science",
-    contact: "Let's build something amazing together. Get in touch for collaborations!"
+     home: "Welcome to my AI portfolio;-) Explore my journey in building intelligent systems.", 
+    about: "AI-driven Software Engineer specializing in intelligent systems.", 
+    projects: "Featured projects: Cognito-Agent AI Chatbot and E-commerce platforms.", 
+    skills: "Tech stack: AI, Java, Spring, React, Python, LLM Integration, and more.", 
+    experience: "AI Developer @ BizzHub | BE Computer Science", 
+    contact: "Let's build something amazing together. Get in touch for collaborations!" 
   };
+
 
   useEffect(() => {
     document.title = "Bhuvan's Portfolio - AI Developer";
@@ -221,94 +221,205 @@ export default function AIPortfolio() {
         </div>
       </nav>
 
-      {/* Fixed Size Robot */}
-      <div className="fixed right-6 bottom-6 z-30 hidden xl:block" style={{ width: '220px', height: '220px' }}>
-        <div className="robot-float w-full h-full">
-          <div className="relative w-full h-full">
-            {/* Robot Body - Fixed Container */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 rounded-2xl p-4 border-2 border-emerald-500/50 shadow-2xl shadow-emerald-500/20">
-              
-              {/* Monitor Section - Fixed Size */}
-              <div className="mb-3" style={{ height: '90px' }}>
-                <div className={`bg-black border-2 border-emerald-400 rounded-lg p-2 h-full w-full ${isTransitioning ? 'glitch-active' : ''}`}>
-                  {/* Scanline effect */}
-                  <div className="absolute inset-0 opacity-5 scanline pointer-events-none">
-                    <div className="h-1 w-full bg-gradient-to-b from-transparent via-emerald-400 to-transparent"></div>
-                  </div>
-                  
-                  {/* Monitor Content - Fixed Container */}
-                  <div className="relative z-10 h-full flex flex-col">
-                    <div className="text-emerald-400 text-xs font-mono mb-1 flex-shrink-0">
-                      {activeSection.toUpperCase()}.TXT
-                    </div>
-                    <div className="text-emerald-300 text-[10px] font-mono leading-tight flex-1 overflow-hidden">
-                      <div className="h-full overflow-y-auto">
-                        {typedText}
-                        <span className={`inline-block w-1 h-3 bg-emerald-400 ml-1 ${isTyping ? 'animate-pulse' : ''}`}></span>
-                      </div>
-                    </div>
-                    <div className="text-emerald-500 text-[8px] font-mono mt-1 flex-shrink-0">
-                      SYSTEM_ACTIVE
-                    </div>
-                  </div>
-                </div>
-                
-                {/* Monitor Stand */}
-                <div className="flex justify-center -mt-1">
-                  <div className="w-12 h-1 bg-gradient-to-b from-gray-600 to-gray-800 rounded-b-lg border border-emerald-500/30"></div>
-                </div>
-              </div>
-
-              {/* Robot Head - Fixed Position */}
-              <div className="flex justify-center mb-2" style={{ height: '40px' }}>
-                <div className="w-10 h-8 bg-gradient-to-b from-gray-700 to-gray-800 rounded-full border-2 border-emerald-500/50 relative">
-                  {/* Eyes */}
-                  <div className="flex justify-center space-x-2 mt-1">
-                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full blink shadow-lg shadow-emerald-400/30"></div>
-                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full blink shadow-lg shadow-emerald-400/30" style={{animationDelay: '0.5s'}}></div>
-                  </div>
-                  
-                  {/* Antenna */}
-                  <div className="absolute -top-2 left-1/2 -translate-x-1/2">
-                    <div className="w-0.5 h-2 bg-gradient-to-t from-emerald-500 to-transparent"></div>
-                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full blink mx-auto -mt-0.5 shadow-lg shadow-emerald-400/30"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Robot Body Details */}
-              <div className="flex justify-center space-x-1 mb-1">
-                <div className="w-4 h-0.5 bg-emerald-500/30 rounded-full"></div>
-                <div className="w-4 h-0.5 bg-emerald-500/30 rounded-full"></div>
-                <div className="w-4 h-0.5 bg-emerald-500/30 rounded-full"></div>
-              </div>
-
-              {/* Robot Base */}
-              <div className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-lg p-1 border border-emerald-500/30" style={{ height: '30px' }}>
-                <div className="flex justify-center space-x-3 h-full items-center">
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 blink" style={{animationDelay: '1s'}}></div>
-                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 blink" style={{animationDelay: '1.5s'}}></div>
-                </div>
-              </div>
-
-              {/* Robot Arms (subtle) */}
-              <div className="absolute -left-1 top-1/2 -translate-y-1/2">
-                <div className="w-2 h-6 bg-gradient-to-r from-gray-700 to-gray-600 rounded-l-full border-l border-emerald-500/30"></div>
-              </div>
-              <div className="absolute -right-1 top-1/2 -translate-y-1/2">
-                <div className="w-2 h-6 bg-gradient-to-l from-gray-700 to-gray-600 rounded-r-full border-r border-emerald-500/30"></div>
-              </div>
-            </div>
-
-            {/* Floating Particles */}
-            <div className="absolute -top-1 -left-1 w-1 h-1 bg-emerald-400 rounded-full blink" style={{animationDelay: '0.3s'}}></div>
-            <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-emerald-400 rounded-full blink" style={{animationDelay: '0.7s'}}></div>
-            <div className="absolute -top-0.5 -right-1 w-0.5 h-0.5 bg-emerald-400 rounded-full blink" style={{animationDelay: '1.2s'}}></div>
+<div className="fixed right-6 bottom-6 z-30 hidden xl:block" style={{ width: '300px', height: '320px' }}>
+  <div className="relative w-full h-full">
+    <div className="absolute inset-0">
+      <div className="absolute inset-0 rounded-2xl bg-emerald-500/10 blur-xl animate-pulse" style={{ animationDuration: '4s' }}></div>
+      <div className="absolute inset-2 rounded-2xl bg-cyan-500/5 blur-lg animate-pulse" style={{ animationDuration: '3s', animationDelay: '1s' }}></div>
+      
+      <div className="absolute inset-0 overflow-hidden rounded-2xl opacity-15">
+        <div className="absolute inset-0 animate-float-data">
+          <div className="text-emerald-400 text-xs font-mono whitespace-nowrap">
+             INITIATING_AI_SYSTEM...
+          </div>
+          <div className="text-cyan-400 text-xs font-mono whitespace-nowrap mt-3">
+             CONNECTION_ESTABLISHED
+          </div>
+          <div className="text-purple-400 text-xs font-mono whitespace-nowrap mt-3">
+             READY_FOR_INTERACTION
           </div>
         </div>
       </div>
 
-      {/* Rest of your portfolio sections remain exactly the same */}
+      <div className="absolute top-0 left-0 w-8 h-8 bg-emerald-400/20 rounded-full blur-md animate-pulse"></div>
+      <div className="absolute bottom-0 right-0 w-8 h-8 bg-cyan-400/20 rounded-full blur-md animate-pulse" style={{animationDelay: '1.5s'}}></div>
+      <div className="absolute top-0 right-0 w-6 h-6 bg-purple-400/20 rounded-full blur-md animate-pulse" style={{animationDelay: '0.7s'}}></div>
+      <div className="absolute bottom-0 left-0 w-6 h-6 bg-pink-400/20 rounded-full blur-md animate-pulse" style={{animationDelay: '2s'}}></div>
+    </div>
+
+    <div className="robot-float w-full h-full relative">
+      <div className="relative w-full h-full">
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 rounded-2xl p-6 border-2 border-emerald-500/50 shadow-2xl shadow-emerald-500/30 hover:shadow-emerald-500/50 transition-all duration-500 hover:scale-105 group">
+          
+          <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-20">
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-emerald-500/20 to-transparent animate-circuit-flow"></div>
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-500/15 to-transparent animate-circuit-flow" style={{ animationDelay: '2s' }}></div>
+          </div>
+
+          <div className="mb-4 relative z-10" style={{ height: '130px' }}>
+            <div className={`bg-black border-2 border-emerald-400 rounded-lg p-3 h-full w-full relative overflow-hidden ${isTransitioning ? 'glitch-active' : ''}`}>
+              
+              <div className="absolute inset-0 opacity-10">
+                <div className="animate-matrix-stream">
+                  <div className="text-emerald-400 text-xs font-mono tracking-widest">0101 0110 1001</div>
+                  <div className="text-green-400 text-xs font-mono tracking-widest mt-2">1010 1001 0110</div>
+                  <div className="text-cyan-400 text-xs font-mono tracking-widest mt-2">1100 0011 1100</div>
+                </div>
+              </div>
+              
+              {/* Enhanced Scanline effect */}
+              <div className="absolute inset-0 opacity-20 scanline pointer-events-none"></div>
+              
+              {/* Monitor Content */}
+              <div className="relative z-10 h-full flex flex-col">
+                <div className="text-emerald-400 text-sm font-mono mb-1 flex-shrink-0 flex items-center justify-between">
+                  <div className="flex items-center">
+                    <div className="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
+                    {activeSection.toUpperCase()}.AI
+                  </div>
+                  <div className="text-cyan-400 text-[10px] animate-digital-pulse">LIVE</div>
+                </div>
+                <div className="text-emerald-300 text-xs font-mono leading-tight flex-1 overflow-hidden break-words">
+                  <div className="h-full" style={{ 
+                    display: '-webkit-box',
+                    WebkitLineClamp: 4,
+                    WebkitBoxOrient: 'vertical',
+                    overflow: 'hidden'
+                  }}>
+                    {typedText}
+                    <span className={`inline-block w-1 h-3 bg-emerald-400 ml-0.5 ${isTyping ? 'animate-pulse' : ''}`}></span>
+                  </div>
+                </div>
+                <div className="text-emerald-500 text-[10px] font-mono mt-1 flex-shrink-0 flex justify-between">
+                  <span className="flex items-center">
+                    <div className="w-1 h-1 bg-emerald-400 rounded-full mr-1 animate-pulse"></div>
+                    SYSTEM_ACTIVE
+                  </span>
+                  <span className="text-cyan-400 flex items-center">
+                    <div className="w-1 h-1 bg-cyan-400 rounded-full mr-1 animate-pulse" style={{animationDelay: '0.5s'}}></div>
+                    AI_MODE
+                  </span>
+                </div>
+              </div>
+
+              {/* Corner Terminal Brackets */}
+              <div className="absolute top-1 left-1 text-emerald-400 text-[8px] font-mono">{'>'}</div>
+              <div className="absolute top-1 right-1 text-emerald-400 text-[8px] font-mono">{'<'}</div>
+              <div className="absolute bottom-1 left-1 text-emerald-400 text-[8px] font-mono">{'>'}</div>
+              <div className="absolute bottom-1 right-1 text-emerald-400 text-[8px] font-mono">{'<'}</div>
+            </div>
+            
+            {/* Enhanced Monitor Stand with Pulsing Light */}
+            <div className="flex justify-center -mt-1">
+              <div className="w-20 h-2 bg-gradient-to-b from-gray-600 to-gray-800 rounded-b-lg border border-emerald-500/30 relative">
+                <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-6 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full animate-pulse"></div>
+                <div className="absolute -top-0.5 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-white rounded-full animate-pulse" style={{animationDelay: '0.3s'}}></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced Robot Head with Dynamic Expressions */}
+          <div className="flex justify-center mb-3 relative z-10" style={{ height: '55px' }}>
+            <div className="w-16 h-14 bg-gradient-to-b from-gray-700 to-gray-800 rounded-full border-2 border-emerald-500/50 relative group/head hover:border-cyan-400/50 transition-colors duration-300">
+              
+              {/* Enhanced Animated Eyes with Hover Effects */}
+              <div className="flex justify-center space-x-4 mt-3">
+                <div className="relative group/eye">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full blink shadow-lg shadow-emerald-400/50 group-hover/head:scale-110 transition-transform duration-300"></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75"></div>
+                  {/* Eye shine */}
+                  <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full opacity-80"></div>
+                </div>
+                <div className="relative group/eye">
+                  <div className="w-3 h-3 bg-emerald-400 rounded-full blink shadow-lg shadow-emerald-400/50 group-hover/head:scale-110 transition-transform duration-300" style={{animationDelay: '0.5s'}}></div>
+                  <div className="absolute inset-0 w-3 h-3 bg-emerald-400 rounded-full animate-ping opacity-75" style={{animationDelay: '0.2s'}}></div>
+                  {/* Eye shine */}
+                  <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full opacity-80"></div>
+                </div>
+              </div>
+              
+              {/* Enhanced Antenna with Signal Waves */}
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                <div className="w-1 h-5 bg-gradient-to-t from-emerald-500 to-cyan-500"></div>
+                <div className="w-3 h-3 bg-gradient-to-br from-emerald-400 to-cyan-400 rounded-full blink mx-auto -mt-1 shadow-lg shadow-emerald-400/50 relative">
+                  {/* Signal Waves */}
+                  <div className="absolute -inset-2 border border-emerald-400 rounded-full animate-ping"></div>
+                  <div className="absolute -inset-3 border border-cyan-400 rounded-full animate-ping" style={{animationDelay: '0.3s'}}></div>
+                </div>
+              </div>
+
+              {/* Animated Mouth/Expression */}
+              <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
+                <div className="w-6 h-1 bg-gradient-to-r from-emerald-500 to-cyan-500 rounded-full group-hover/head:w-8 transition-all duration-300 animate-pulse"></div>
+              </div>
+            </div>
+          </div>
+
+          {/* Enhanced Animated Body Details */}
+          <div className="flex justify-center space-x-3 mb-3 relative z-10">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="relative group/detail">
+                <div className="w-6 h-1 bg-gradient-to-r from-emerald-500/40 to-cyan-500/40 rounded-full"></div>
+                <div className="absolute inset-0 w-6 h-1 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full animate-pulse opacity-60" style={{animationDelay: `${i * 0.3}s`}}></div>
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-emerald-400 rounded-full opacity-0 group-hover/detail:opacity-100 transition-opacity duration-300"></div>
+              </div>
+            ))}
+          </div>
+
+          {/* Enhanced Robot Base with Interactive Status Lights */}
+          <div className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-lg p-3 border border-emerald-500/30 relative z-10 group/base" style={{ height: '45px' }}>
+            <div className="flex justify-center space-x-3 h-full items-center">
+              {[
+                { color: 'emerald', label: 'POWER', delay: '1s' },
+                { color: 'cyan', label: 'AI_CORE', delay: '1.3s' },
+                { color: 'purple', label: 'DATA', delay: '1.6s' },
+                { color: 'pink', label: 'NETWORK', delay: '1.9s' }
+              ].map((light, i) => (
+                <div key={i} className="relative group/light">
+                  <div className={`w-3 h-3 rounded-full bg-gradient-to-br from-${light.color}-500 to-${light.color}-300 blink`} style={{animationDelay: light.delay}}></div>
+                  <div className={`absolute inset-0 w-3 h-3 rounded-full bg-${light.color}-400 animate-ping opacity-40`} style={{animationDelay: light.delay}}></div>
+                  
+                  {/* Enhanced Tooltip */}
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-black/90 text-white text-[7px] px-1.5 py-0.5 rounded border border-emerald-500/30 opacity-0 group-hover/light:opacity-100 transition-all duration-300 whitespace-nowrap transform -translate-y-2 group-hover/light:translate-y-0">
+                    {light.label}
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            {/* Base Glow Effect */}
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-emerald-500/5 to-cyan-500/5 opacity-0 group-hover/base:opacity-100 transition-opacity duration-500"></div>
+          </div>
+
+          {/* Enhanced Robot Arms with Interactive Joints */}
+          <div className="absolute -left-3 top-1/2 -translate-y-1/2 group-hover:-left-4 transition-all duration-500">
+            <div className="w-4 h-14 bg-gradient-to-r from-gray-700 to-gray-600 rounded-l-full border-l border-emerald-500/30 relative group/arm">
+              <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-emerald-400 rounded-full blink group-hover/arm:bg-cyan-400 transition-colors duration-300"></div>
+              {/* Arm joint glow */}
+              <div className="absolute -right-0.5 top-1/2 -translate-y-1/2 w-3 h-3 bg-emerald-400/20 rounded-full group-hover/arm:bg-cyan-400/30 transition-colors duration-300"></div>
+            </div>
+          </div>
+          <div className="absolute -right-3 top-1/2 -translate-y-1/2 group-hover:-right-4 transition-all duration-500">
+            <div className="w-4 h-14 bg-gradient-to-l from-gray-700 to-gray-600 rounded-r-full border-r border-emerald-500/30 relative group/arm">
+              <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-cyan-400 rounded-full blink group-hover/arm:bg-emerald-400 transition-colors duration-300" style={{animationDelay: '0.7s'}}></div>
+              {/* Arm joint glow */}
+              <div className="absolute -left-0.5 top-1/2 -translate-y-1/2 w-3 h-3 bg-cyan-400/20 rounded-full group-hover/arm:bg-emerald-400/30 transition-colors duration-300"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* Enhanced Floating Particles with Glow */}
+        <div className="absolute -top-2 -left-2 w-2 h-2 bg-emerald-400 rounded-full blink animate-float" style={{animationDelay: '0.3s'}}>
+          <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping" style={{animationDuration: '2s'}}></div>
+        </div>
+        <div className="absolute -bottom-2 -right-2 w-2 h-2 bg-cyan-400 rounded-full blink animate-float" style={{animationDelay: '0.7s'}}>
+          <div className="absolute inset-0 bg-cyan-400 rounded-full animate-ping" style={{animationDuration: '2s', animationDelay: '0.3s'}}></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/40 via-black to-emerald-950/20" />

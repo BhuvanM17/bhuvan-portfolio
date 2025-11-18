@@ -304,3 +304,336 @@ a:focus-visible {
 * {
   transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
+
+/* Add these to your existing CSS */
+.text-overflow-fix {
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.monitor-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  /* Limit to 4 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Ensure text stays within monitor bounds */
+.break-words {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Specific fix for the monitor content */
+.monitor-content {
+  max-height: 100%;
+  overflow: hidden;
+}
+
+/* Add these to your existing CSS */
+
+/* Orbital Animation */
+@keyframes orbit {
+  0% {
+    transform: rotate(0deg) translateX(20px) rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg) translateX(20px) rotate(-360deg);
+  }
+}
+
+.animate-orbit {
+  animation: orbit linear infinite;
+}
+
+/* Energy Wave Animation */
+@keyframes energy-wave {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+.animate-energy-wave {
+  animation: energy-wave 3s linear infinite;
+}
+
+/* Matrix Rain Effect */
+@keyframes matrix-rain {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-matrix-rain {
+  animation: matrix-rain 8s linear infinite;
+}
+
+/* Floating Binary Background */
+@keyframes float-binary {
+
+  0%,
+  100% {
+    transform: translateX(0px);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-float-binary {
+  animation: float-binary 20s ease-in-out infinite;
+}
+
+/* Enhanced Floating Animation */
+@keyframes float-enhanced {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+
+  33% {
+    transform: translateY(-10px) rotate(1deg);
+  }
+
+  66% {
+    transform: translateY(5px) rotate(-1deg);
+  }
+}
+
+.robot-float {
+  animation: float-enhanced 6s ease-in-out infinite;
+}
+
+/* Particle Trail Effect */
+@keyframes particle-trail {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-particle {
+  animation: particle-trail 2s ease-in-out infinite;
+}
+
+/* Hover Glow Effect */
+@keyframes hover-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 40px rgba(16, 185, 129, 0.6),
+      0 0 60px rgba(16, 185, 129, 0.3);
+  }
+}
+
+.hover-glow {
+  animation: hover-glow 3s ease-in-out infinite;
+}
+
+/* Digital Pulse */
+@keyframes digital-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.animate-digital-pulse {
+  animation: digital-pulse 1.5s ease-in-out infinite;
+}
+
+/* Enhanced CSS Animations */
+
+/* Circuit Flow Animation */
+@keyframes circuit-flow {
+  0% {
+    transform: translateX(-100%) skewX(-12deg);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translateX(200%) skewX(-12deg);
+    opacity: 0;
+  }
+}
+
+.animate-circuit-flow {
+  animation: circuit-flow 4s linear infinite;
+}
+
+/* Matrix Data Stream */
+@keyframes matrix-stream {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-matrix-stream {
+  animation: matrix-stream 6s linear infinite;
+}
+
+/* Floating Data Animation */
+@keyframes float-data {
+
+  0%,
+  100% {
+    transform: translateX(0px) translateY(0px);
+  }
+
+  25% {
+    transform: translateX(-3px) translateY(-2px);
+  }
+
+  50% {
+    transform: translateX(2px) translateY(-3px);
+  }
+
+  75% {
+    transform: translateX(-2px) translateY(2px);
+  }
+}
+
+.animate-float-data {
+  animation: float-data 15s ease-in-out infinite;
+}
+
+/* Enhanced Floating with Rotation */
+@keyframes float-enhanced {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg) scale(1);
+  }
+
+  33% {
+    transform: translateY(-8px) rotate(0.5deg) scale(1.02);
+  }
+
+  66% {
+    transform: translateY(4px) rotate(-0.5deg) scale(0.98);
+  }
+}
+
+.robot-float {
+  animation: float-enhanced 5s ease-in-out infinite;
+}
+
+/* Digital Pulse for Status */
+@keyframes digital-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 5px currentColor;
+  }
+
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 10px currentColor;
+  }
+}
+
+.animate-digital-pulse {
+  animation: digital-pulse 2s ease-in-out infinite;
+}
+
+/* Enhanced Glitch Effect */
+@keyframes enhanced-glitch {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+
+  10% {
+    transform: translate(-1px, 1px);
+  }
+
+  20% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(10deg);
+  }
+
+  30% {
+    transform: translate(-1px, -1px);
+  }
+
+  40% {
+    transform: translate(1px, 1px);
+    filter: hue-rotate(0deg);
+  }
+
+  50% {
+    transform: translate(-1px, 1px);
+  }
+
+  60% {
+    transform: translate(1px, -1px);
+    filter: hue-rotate(-10deg);
+  }
+
+  70% {
+    transform: translate(-1px, -1px);
+  }
+
+  80% {
+    transform: translate(1px, 1px);
+    filter: hue-rotate(0deg);
+  }
+
+  90% {
+    transform: translate(-1px, 1px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+.glitch-active {
+  animation: enhanced-glitch 0.5s linear;
+}
