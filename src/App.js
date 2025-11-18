@@ -1,13 +1,36 @@
-import React, { useState, useEffect } from 'react';
-import { Code, Brain, Database, Server, Mail, Phone, MapPin, Github, Linkedin, ChevronDown, Terminal, Cpu, Sparkles, Zap, Award, Briefcase, GraduationCap, Rocket, Menu, X, ExternalLink, Download } from 'lucide-react';
-import profileImage from '../src/assets/profile.jpeg'
-export default function Portfolio() {
+import React, { useState, useEffect, useRef } from 'react';
+import { Code, Brain, Database, Server, Mail, Phone, MapPin, Github, Linkedin, ChevronDown, Terminal, Cpu, Sparkles, Zap, Award, Briefcase, GraduationCap, Rocket, Menu, X, Download, Monitor } from 'lucide-react';
+import profile from './assets/profile.jpeg';
+export default function AIPortfolio() {
   const [activeSection, setActiveSection] = useState('home');
   const [isVisible, setIsVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [typedText, setTypedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const lastSectionRef = useRef('home');
+
+
+  // Section descriptions for typing effect
+  const sectionTexts = {
+    home: "Welcome to my AI portfolio. I build intelligent systems that think and deliver.",
+    about: "AI-driven Software Engineer specializing in intelligent systems and full-stack development.",
+    projects: "Featured projects: Cognito-Agent AI Chatbot, Healthcare Systems, and E-commerce platforms.",
+    skills: "Tech stack: AI/ML, Java, Spring, React, Python, LLM Integration, and more.",
+    experience: "AI Developer @ BizzHub | Prompt Engineer @ Analogica | BE Computer Science",
+    contact: "Let's build something amazing together. Get in touch for collaborations!"
+  };
 
   useEffect(() => {
+    document.title = "Bhuvan's Portfolio - AI Developer";
+    
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel = 'shortcut icon';
+    link.href = profile;
+    document.getElementsByTagName('head')[0].appendChild(link);
+
     setIsVisible(true);
     
     const handleScroll = () => {
@@ -17,13 +40,17 @@ export default function Portfolio() {
       const progress = (scrollTop / (documentHeight - windowHeight)) * 100;
       setScrollProgress(progress);
 
-      // Update active section based on scroll position
       const sections = ['home', 'about', 'projects', 'skills', 'experience', 'contact'];
       for (const section of sections) {
         const element = document.getElementById(section);
         if (element) {
           const rect = element.getBoundingClientRect();
           if (rect.top <= 100 && rect.bottom >= 100) {
+            if (lastSectionRef.current !== section) {
+              setIsTransitioning(true);
+              setTimeout(() => setIsTransitioning(false), 500);
+              lastSectionRef.current = section;
+            }
             setActiveSection(section);
             break;
           }
@@ -32,8 +59,31 @@ export default function Portfolio() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
+
+  // Typing effect
+  useEffect(() => {
+    setIsTyping(true);
+    setTypedText('');
+    
+    const text = sectionTexts[activeSection] || '';
+    let currentIndex = 0;
+    
+    const typingInterval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setTypedText(text.slice(0, currentIndex));
+        currentIndex++;
+      } else {
+        setIsTyping(false);
+        clearInterval(typingInterval);
+      }
+    }, 30);
+
+    return () => clearInterval(typingInterval);
+  }, [activeSection]);
 
   const skills = {
     'Backend Development': ['Java', 'Spring MVC', 'Spring Boot', 'Hibernate', 'JDBC', 'JPA', 'Servlets', 'Java 8'],
@@ -47,14 +97,13 @@ export default function Portfolio() {
     {
       title: 'Cognito-Agent: Enterprise Agentic AI Chatbot',
       type: 'Current Development @ BizzHub',
-      description: 'Building an advanced agentic AI chatbot leveraging Generative AI and LLM technology for intelligent, context-aware enterprise interactions. The system implements multi-agent orchestration with autonomous decision-making capabilities, real-time learning from user interactions, and seamless enterprise system integration.',
-      tech: ['Generative AI', 'LLM', 'Agentic Workflows', 'Python', 'LangChain', 'React', 'Vector DB'],
+      description: 'Building an advanced agentic AI chatbot leveraging Generative AI and LLM technology for intelligent, context-aware enterprise interactions.',
+      tech: ['Generative AI', 'LLM', 'Agentic Workflows', 'Python', 'LangChain', 'React'],
       highlights: [
         'Multi-agent orchestration with autonomous reasoning',
         'Context-aware conversational memory',
         'Real-time learning and adaptation',
-        'Enterprise system integration via REST APIs',
-        'Scalable microservices architecture'
+        'Enterprise system integration via REST APIs'
       ],
       status: 'In Development',
       impact: 'Expected to reduce query resolution time by 60%'
@@ -62,13 +111,12 @@ export default function Portfolio() {
     {
       title: 'PCMS - Provider Care Management Solutions',
       type: 'Enterprise Healthcare Platform',
-      description: 'Developed a robust healthcare management system with advanced data processing capabilities using Java and Snowflake integration. Implemented efficient data pipelines for processing large-scale healthcare data, enabling real-time analytics and reporting.',
-      tech: ['Java', 'Snowflake', 'Spring MVC', 'RESTful APIs', 'Data Pipeline'],
+      description: 'Developed a robust healthcare management system with advanced data processing capabilities using Java and Snowflake integration.',
+      tech: ['Java', 'Snowflake', 'Spring MVC', 'RESTful APIs'],
       highlights: [
         'Data pipeline optimization for healthcare records',
         'Cross-team collaboration and Agile methodology',
         'Performance enhancement through query optimization',
-        'Secure data handling compliant with standards',
         'Real-time reporting and analytics dashboard'
       ],
       status: 'Completed',
@@ -77,13 +125,12 @@ export default function Portfolio() {
     {
       title: 'MediSales - Medicine E-Commerce Platform',
       type: 'Full Stack Web Application',
-      description: 'Built a comprehensive e-commerce platform enabling manufacturers, distributors, and vendors to manage medicine sales operations efficiently. Implemented multi-role authentication, real-time inventory management, and order processing workflows.',
-      tech: ['Java', 'Spring MVC', 'Hibernate', 'MySQL', 'JavaScript', 'AJAX', 'HTML/CSS'],
+      description: 'Built a comprehensive e-commerce platform enabling manufacturers, distributors, and vendors to manage medicine sales operations efficiently.',
+      tech: ['Java', 'Spring MVC', 'Hibernate', 'MySQL', 'JavaScript'],
       highlights: [
-        'Multi-role authentication system (Manufacturer, Distributor, Vendor)',
-        'Real-time inventory tracking and management',
+        'Multi-role authentication system',
+        'Real-time inventory tracking',
         'RESTful API architecture for scalability',
-        'Asynchronous order processing with AJAX',
         'Responsive UI with dynamic content loading'
       ],
       status: 'Completed',
@@ -107,7 +154,7 @@ export default function Portfolio() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-gray-100 relative">
+    <div className="min-h-screen bg-black text-gray-100 relative overflow-x-hidden">
       {/* Scroll Progress Bar */}
       <div className="fixed top-0 left-0 w-full h-1 bg-emerald-900/20 z-50">
         <div 
@@ -121,13 +168,14 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2 cursor-pointer" onClick={() => scrollToSection('home')}>
-              <Terminal className="w-6 h-6 text-emerald-400" />
+              <div className="w-8 h-8 rounded-full overflow-hidden border-2 border-emerald-400">
+                <img src={profile} alt="Bhuvan" className="w-full h-full object-cover" />
+              </div>
               <span className="text-xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
                 BHUVAN.M
               </span>
             </div>
             
-            {/* Desktop Navigation */}
             <div className="hidden md:flex space-x-8">
               {['home', 'about', 'projects', 'skills', 'experience', 'contact'].map((section) => (
                 <button
@@ -145,7 +193,6 @@ export default function Portfolio() {
               ))}
             </div>
 
-            {/* Mobile Menu Button */}
             <button 
               className="md:hidden text-emerald-400"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -154,9 +201,8 @@ export default function Portfolio() {
             </button>
           </div>
 
-          {/* Mobile Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 space-y-3 animate-fade-in">
+            <div className="md:hidden mt-4 pb-4 space-y-3">
               {['home', 'about', 'projects', 'skills', 'experience', 'contact'].map((section) => (
                 <button
                   key={section}
@@ -175,6 +221,94 @@ export default function Portfolio() {
         </div>
       </nav>
 
+      {/* Fixed Size Robot */}
+      <div className="fixed right-6 bottom-6 z-30 hidden xl:block" style={{ width: '220px', height: '220px' }}>
+        <div className="robot-float w-full h-full">
+          <div className="relative w-full h-full">
+            {/* Robot Body - Fixed Container */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 rounded-2xl p-4 border-2 border-emerald-500/50 shadow-2xl shadow-emerald-500/20">
+              
+              {/* Monitor Section - Fixed Size */}
+              <div className="mb-3" style={{ height: '90px' }}>
+                <div className={`bg-black border-2 border-emerald-400 rounded-lg p-2 h-full w-full ${isTransitioning ? 'glitch-active' : ''}`}>
+                  {/* Scanline effect */}
+                  <div className="absolute inset-0 opacity-5 scanline pointer-events-none">
+                    <div className="h-1 w-full bg-gradient-to-b from-transparent via-emerald-400 to-transparent"></div>
+                  </div>
+                  
+                  {/* Monitor Content - Fixed Container */}
+                  <div className="relative z-10 h-full flex flex-col">
+                    <div className="text-emerald-400 text-xs font-mono mb-1 flex-shrink-0">
+                      {activeSection.toUpperCase()}.TXT
+                    </div>
+                    <div className="text-emerald-300 text-[10px] font-mono leading-tight flex-1 overflow-hidden">
+                      <div className="h-full overflow-y-auto">
+                        {typedText}
+                        <span className={`inline-block w-1 h-3 bg-emerald-400 ml-1 ${isTyping ? 'animate-pulse' : ''}`}></span>
+                      </div>
+                    </div>
+                    <div className="text-emerald-500 text-[8px] font-mono mt-1 flex-shrink-0">
+                      SYSTEM_ACTIVE
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Monitor Stand */}
+                <div className="flex justify-center -mt-1">
+                  <div className="w-12 h-1 bg-gradient-to-b from-gray-600 to-gray-800 rounded-b-lg border border-emerald-500/30"></div>
+                </div>
+              </div>
+
+              {/* Robot Head - Fixed Position */}
+              <div className="flex justify-center mb-2" style={{ height: '40px' }}>
+                <div className="w-10 h-8 bg-gradient-to-b from-gray-700 to-gray-800 rounded-full border-2 border-emerald-500/50 relative">
+                  {/* Eyes */}
+                  <div className="flex justify-center space-x-2 mt-1">
+                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full blink shadow-lg shadow-emerald-400/30"></div>
+                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full blink shadow-lg shadow-emerald-400/30" style={{animationDelay: '0.5s'}}></div>
+                  </div>
+                  
+                  {/* Antenna */}
+                  <div className="absolute -top-2 left-1/2 -translate-x-1/2">
+                    <div className="w-0.5 h-2 bg-gradient-to-t from-emerald-500 to-transparent"></div>
+                    <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full blink mx-auto -mt-0.5 shadow-lg shadow-emerald-400/30"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Robot Body Details */}
+              <div className="flex justify-center space-x-1 mb-1">
+                <div className="w-4 h-0.5 bg-emerald-500/30 rounded-full"></div>
+                <div className="w-4 h-0.5 bg-emerald-500/30 rounded-full"></div>
+                <div className="w-4 h-0.5 bg-emerald-500/30 rounded-full"></div>
+              </div>
+
+              {/* Robot Base */}
+              <div className="bg-gradient-to-b from-gray-900 to-gray-800 rounded-lg p-1 border border-emerald-500/30" style={{ height: '30px' }}>
+                <div className="flex justify-center space-x-3 h-full items-center">
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 blink" style={{animationDelay: '1s'}}></div>
+                  <div className="w-3 h-3 rounded-full bg-gradient-to-br from-emerald-500 to-green-400 blink" style={{animationDelay: '1.5s'}}></div>
+                </div>
+              </div>
+
+              {/* Robot Arms (subtle) */}
+              <div className="absolute -left-1 top-1/2 -translate-y-1/2">
+                <div className="w-2 h-6 bg-gradient-to-r from-gray-700 to-gray-600 rounded-l-full border-l border-emerald-500/30"></div>
+              </div>
+              <div className="absolute -right-1 top-1/2 -translate-y-1/2">
+                <div className="w-2 h-6 bg-gradient-to-l from-gray-700 to-gray-600 rounded-r-full border-r border-emerald-500/30"></div>
+              </div>
+            </div>
+
+            {/* Floating Particles */}
+            <div className="absolute -top-1 -left-1 w-1 h-1 bg-emerald-400 rounded-full blink" style={{animationDelay: '0.3s'}}></div>
+            <div className="absolute -bottom-1 -right-1 w-1 h-1 bg-emerald-400 rounded-full blink" style={{animationDelay: '0.7s'}}></div>
+            <div className="absolute -top-0.5 -right-1 w-0.5 h-0.5 bg-emerald-400 rounded-full blink" style={{animationDelay: '1.2s'}}></div>
+          </div>
+        </div>
+      </div>
+
+      {/* Rest of your portfolio sections remain exactly the same */}
       {/* Hero Section */}
       <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
         <div className="absolute inset-0 bg-gradient-to-br from-emerald-950/40 via-black to-emerald-950/20" />
@@ -183,20 +317,13 @@ export default function Portfolio() {
           backgroundSize: '48px 48px'
         }} />
         
-        {/* Animated background elements */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-500/5 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-green-500/5 rounded-full blur-3xl animate-pulse delay-1000" />
-        
         <div className={`max-w-6xl mx-auto px-4 sm:px-6 text-center z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {/* Profile Image */}
           <div className="mb-8 flex justify-center">
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
-              <img 
-                src={profileImage}
-                alt="Bhuvan M"
-                className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full object-cover border-4 border-emerald-500/50 shadow-2xl group-hover:scale-105 transition-transform duration-300"
-              />
+              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-400 to-green-500 rounded-full blur opacity-75 group-hover:opacity-100 transition duration-1000 animate-pulse" />
+              <div className="relative w-40 h-40 sm:w-48 sm:h-48 rounded-full overflow-hidden border-4 border-emerald-500/50 shadow-2xl">
+                <img src={profile} alt="Bhuvan M" className="w-full h-full object-cover" />
+              </div>
             </div>
           </div>
 
@@ -211,10 +338,9 @@ export default function Portfolio() {
             Engineering Intelligent Systems<br />That Think & Deliver
           </h1>
           
-         <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-           Building scalable AI systems using <span className="text-emerald-400 font-semibold">Python, LangChain</span> and advanced <span className="text-emerald-400 font-semibold">LLM-driven architectures</span> to deliver intelligent, high-performance solutions.
-         </p>
-
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+            Building scalable AI systems using <span className="text-emerald-400 font-semibold">Python, LangChain</span> and advanced <span className="text-emerald-400 font-semibold">LLM-driven architectures</span>
+          </p>
           
           <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
             <button 
@@ -230,13 +356,6 @@ export default function Portfolio() {
             >
               Get In Touch
             </button>
-            <a 
-              href="mailto:bhuvanshetty317@gmail.com"
-              className="border-2 border-emerald-500/30 hover:bg-emerald-900/20 px-8 py-3 rounded-lg font-semibold transition-all flex items-center justify-center space-x-2"
-            >
-              <Download className="w-5 h-5" />
-              <span>Resume</span>
-            </a>
           </div>
           
           <button 
@@ -249,64 +368,39 @@ export default function Portfolio() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-20 bg-gradient-to-b from-black via-emerald-950/10 to-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <section id="about" className="min-h-screen py-20 bg-gradient-to-b from-black via-emerald-950/10 to-black flex items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <div className="flex items-center space-x-3 mb-12">
             <Brain className="w-8 h-8 text-emerald-400" />
             <h2 className="text-3xl sm:text-4xl font-bold text-emerald-400">About Me</h2>
           </div>
           
-          <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start">
-            <div className="space-y-6">
-              <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-950/20 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 backdrop-blur-sm hover:border-emerald-500/50 transition-all">
-                <h3 className="text-2xl font-bold mb-4 text-emerald-300">AI-Driven Software Engineer</h3>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  I'm an <span className="text-emerald-400 font-semibold">AI-driven Software Engineer</span> specializing in the intersection of robust backend architecture and intelligent system design, with proven expertise in <span className="text-emerald-400">Java, Spring MVC, Hibernate</span>, and enterprise-grade full stack development.
-                </p>
-                <p className="text-gray-300 leading-relaxed mb-4">
-                  Currently building cutting-edge <span className="text-emerald-400 font-semibold">Agentic AI Chatbots</span> at <span className="text-emerald-400">BizzHub Workspaces</span>, leveraging Generative AI and LLM technology to create context-aware, intelligent systems. My foundation in Prompt Engineering enhanced model accuracy by <span className="text-emerald-400 font-semibold">15%</span> through systematic optimization.
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  I architect scalable solutions that bridge traditional backend engineering with cutting-edge Generative AI capabilities—creating systems that don't just process data, they <span className="text-emerald-400 font-semibold">reason, adapt, and deliver intelligent outcomes</span>.
-                </p>
-              </div>
+          <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
+            <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-950/20 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
+              <h3 className="text-2xl font-bold mb-4 text-emerald-300">AI-Driven Software Engineer</h3>
+              <p className="text-gray-300 leading-relaxed mb-4">
+                I'm an <span className="text-emerald-400 font-semibold">AI-driven Software Engineer</span> specializing in intelligent systems with expertise in <span className="text-emerald-400">Java, Spring MVC, Hibernate</span>, and full stack development.
+              </p>
+              <p className="text-gray-300 leading-relaxed">
+                Currently building <span className="text-emerald-400 font-semibold">Agentic AI Chatbots</span> at <span className="text-emerald-400">BizzHub</span>, leveraging Generative AI and LLM technology to create context-aware systems.
+              </p>
             </div>
             
             <div className="space-y-4">
               {[
-                { 
-                  icon: Cpu, 
-                  label: 'Agentic AI Development', 
-                  value: 'Building intelligent multi-agent systems with autonomous decision-making',
-                  color: 'emerald'
-                },
-                { 
-                  icon: Server, 
-                  label: 'Backend Architecture', 
-                  value: 'Enterprise Java, Spring ecosystem, microservices design',
-                  color: 'green'
-                },
-                { 
-                  icon: Brain, 
-                  label: 'LLM Integration', 
-                  value: 'Generative AI, prompt engineering, context management',
-                  color: 'emerald'
-                },
-                { 
-                  icon: Database, 
-                  label: 'Data Management', 
-                  value: 'Hibernate ORM, MySQL, Snowflake, vector databases',
-                  color: 'green'
-                }
+                { icon: Cpu, label: 'Agentic AI Development', value: 'Multi-agent systems with autonomous decision-making' },
+                { icon: Server, label: 'Backend Architecture', value: 'Enterprise Java, Spring ecosystem, microservices' },
+                { icon: Brain, label: 'LLM Integration', value: 'Generative AI, prompt engineering' },
+                { icon: Database, label: 'Data Management', value: 'Hibernate ORM, MySQL, Snowflake' }
               ].map((item, idx) => (
-                <div key={idx} className="bg-emerald-900/10 border border-emerald-500/20 rounded-xl p-6 hover:border-emerald-500/40 hover:bg-emerald-900/20 transition-all group">
+                <div key={idx} className="bg-emerald-900/10 border border-emerald-500/20 rounded-xl p-6 hover:border-emerald-500/40 transition-all">
                   <div className="flex items-start space-x-4">
-                    <div className="bg-emerald-500/10 p-3 rounded-lg group-hover:bg-emerald-500/20 transition-all">
+                    <div className="bg-emerald-500/10 p-3 rounded-lg">
                       <item.icon className="w-6 h-6 text-emerald-400" />
                     </div>
-                    <div className="flex-1">
+                    <div>
                       <h4 className="font-semibold text-emerald-300 mb-1">{item.label}</h4>
-                      <p className="text-gray-400 text-sm leading-relaxed">{item.value}</p>
+                      <p className="text-gray-400 text-sm">{item.value}</p>
                     </div>
                   </div>
                 </div>
@@ -317,8 +411,8 @@ export default function Portfolio() {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <section id="projects" className="min-h-screen py-20 bg-black flex items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <div className="flex items-center space-x-3 mb-12">
             <Code className="w-8 h-8 text-emerald-400" />
             <h2 className="text-3xl sm:text-4xl font-bold text-emerald-400">Featured Projects</h2>
@@ -326,18 +420,13 @@ export default function Portfolio() {
           
           <div className="space-y-8">
             {projects.map((project, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-emerald-900/10 to-emerald-950/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/50 transition-all group hover:shadow-2xl hover:shadow-emerald-500/10">
-                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 space-y-3 sm:space-y-0">
-                  <div className="flex-1">
-                    <div className="flex items-start space-x-3 mb-2">
-                      <h3 className="text-xl sm:text-2xl font-bold text-emerald-300 group-hover:text-emerald-400 transition-colors">
-                        {project.title}
-                      </h3>
-                      {idx === 0 && <Zap className="w-5 h-5 text-yellow-400 animate-pulse flex-shrink-0 mt-1" />}
-                    </div>
+              <div key={idx} className="bg-gradient-to-br from-emerald-900/10 to-emerald-950/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/50 transition-all">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
+                  <div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-emerald-300 mb-2">{project.title}</h3>
                     <span className="text-emerald-400/70 text-sm font-semibold">{project.type}</span>
                   </div>
-                  <span className={`px-4 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap ${
+                  <span className={`px-4 py-1.5 rounded-full text-xs font-semibold ${
                     project.status === 'In Development' 
                       ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' 
                       : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
@@ -346,7 +435,7 @@ export default function Portfolio() {
                   </span>
                 </div>
                 
-                <p className="text-gray-300 mb-6 leading-relaxed">{project.description}</p>
+                <p className="text-gray-300 mb-6">{project.description}</p>
                 
                 {project.impact && (
                   <div className="bg-emerald-500/10 border-l-4 border-emerald-500 rounded px-4 py-3 mb-6">
@@ -357,24 +446,9 @@ export default function Portfolio() {
                   </div>
                 )}
                 
-                <div className="mb-6">
-                  <h4 className="text-sm font-semibold text-emerald-400 mb-3 flex items-center">
-                    <ChevronDown className="w-4 h-4 mr-1 rotate-[-90deg]" />
-                    Key Highlights
-                  </h4>
-                  <div className="grid sm:grid-cols-2 gap-2">
-                    {project.highlights.map((highlight, i) => (
-                      <div key={i} className="flex items-start space-x-2 text-sm text-gray-400">
-                        <div className="w-1.5 h-1.5 bg-emerald-400 rounded-full mt-1.5 flex-shrink-0" />
-                        <span className="leading-relaxed">{highlight}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
                 <div className="flex flex-wrap gap-2">
                   {project.tech.map((tech, i) => (
-                    <span key={i} className="bg-emerald-900/30 border border-emerald-500/30 px-3 py-1 rounded-lg text-xs text-emerald-300 hover:bg-emerald-900/50 transition-colors">
+                    <span key={i} className="bg-emerald-900/30 border border-emerald-500/30 px-3 py-1 rounded-lg text-xs text-emerald-300">
                       {tech}
                     </span>
                   ))}
@@ -386,8 +460,8 @@ export default function Portfolio() {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className="py-20 bg-gradient-to-b from-black via-emerald-950/10 to-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <section id="skills" className="min-h-screen py-20 bg-gradient-to-b from-black via-emerald-950/10 to-black flex items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <div className="flex items-center space-x-3 mb-12">
             <Cpu className="w-8 h-8 text-emerald-400" />
             <h2 className="text-3xl sm:text-4xl font-bold text-emerald-400">Technical Arsenal</h2>
@@ -395,16 +469,16 @@ export default function Portfolio() {
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(skills).map(([category, skillList], idx) => (
-              <div key={idx} className="bg-emerald-900/10 border border-emerald-500/30 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-emerald-900/20 transition-all group">
-                <h3 className="text-lg font-bold text-emerald-300 mb-4 flex items-center group-hover:text-emerald-400 transition-colors">
-                  <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 group-hover:animate-pulse" />
+              <div key={idx} className="bg-emerald-900/10 border border-emerald-500/30 rounded-xl p-6 hover:border-emerald-500/50 hover:bg-emerald-900/20 transition-all">
+                <h3 className="text-lg font-bold text-emerald-300 mb-4 flex items-center">
+                  <span className="w-2 h-2 bg-emerald-400 rounded-full mr-3 animate-pulse" />
                   {category}
                 </h3>
                 <div className="space-y-2">
                   {skillList.map((skill, i) => (
-                    <div key={i} className="flex items-center space-x-2 group/item">
-                      <ChevronDown className="w-3 h-3 text-emerald-400 rotate-[-90deg] flex-shrink-0 group-hover/item:translate-x-1 transition-transform" />
-                      <span className="text-gray-300 text-sm group-hover/item:text-emerald-300 transition-colors">{skill}</span>
+                    <div key={i} className="flex items-center space-x-2">
+                      <ChevronDown className="w-3 h-3 text-emerald-400 rotate-[-90deg] flex-shrink-0" />
+                      <span className="text-gray-300 text-sm">{skill}</span>
                     </div>
                   ))}
                 </div>
@@ -415,34 +489,33 @@ export default function Portfolio() {
       </section>
 
       {/* Experience Section */}
-      <section id="experience" className="py-20 bg-black">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <section id="experience" className="min-h-screen py-20 bg-black flex items-center">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full">
           <div className="flex items-center space-x-3 mb-12">
             <Briefcase className="w-8 h-8 text-emerald-400" />
             <h2 className="text-3xl sm:text-4xl font-bold text-emerald-400">Professional Journey</h2>
           </div>
           
           <div className="space-y-8">
-            {/* Current Role */}
-            <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-950/20 border-2 border-emerald-500/40 rounded-2xl p-6 sm:p-8 relative overflow-hidden group hover:border-emerald-500/60 transition-all">
+            <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-950/20 border-2 border-emerald-500/40 rounded-2xl p-6 sm:p-8 relative">
               <div className="absolute top-4 right-4 bg-emerald-500/20 border border-emerald-400 text-emerald-400 px-4 py-1 rounded-full text-xs font-bold animate-pulse">
                 CURRENT
               </div>
               <div className="flex items-start space-x-4 mb-4">
-                <div className="bg-emerald-500/20 p-3 rounded-xl group-hover:scale-110 transition-transform">
+                <div className="bg-emerald-500/20 p-3 rounded-xl">
                   <Brain className="w-6 h-6 text-emerald-400" />
                 </div>
-                <div className="flex-1">
+                <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-emerald-300">AI Developer</h3>
                   <p className="text-emerald-400/70 font-semibold">BizzHub Workspaces, Bangalore</p>
                   <p className="text-gray-400 text-sm">October 2025 - Present</p>
                 </div>
               </div>
               <p className="text-gray-300 leading-relaxed mb-4">
-                Architecting and developing advanced <span className="text-emerald-400 font-semibold">Agentic AI Chatbot systems</span> leveraging Generative AI and LLM technology. Building intelligent, context-aware conversational agents with multi-agent orchestration capabilities, real-time learning, and enterprise integration for scalable AI-driven solutions.
+                Architecting advanced <span className="text-emerald-400 font-semibold">Agentic AI Chatbot systems</span> leveraging Generative AI and LLM technology with multi-agent orchestration capabilities.
               </p>
               <div className="flex flex-wrap gap-2">
-                {['Generative AI', 'LLM Integration', 'Agentic Workflows', 'Java', 'Spring Boot', 'Microservices'].map((tech, i) => (
+                {['Generative AI', 'LLM Integration', 'Agentic Workflows', 'Python', 'Spring Boot'].map((tech, i) => (
                   <span key={i} className="bg-emerald-900/40 border border-emerald-500/40 px-3 py-1 rounded text-xs text-emerald-300">
                     {tech}
                   </span>
@@ -450,25 +523,23 @@ export default function Portfolio() {
               </div>
             </div>
 
-            {/* Previous Role */}
-            <div className="bg-emerald-900/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/50 transition-all group">
+            <div className="bg-emerald-900/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8">
               <div className="flex items-start space-x-4 mb-4">
-                <div className="bg-emerald-500/10 p-3 rounded-xl group-hover:scale-110 transition-transform">
+                <div className="bg-emerald-500/10 p-3 rounded-xl">
                   <Terminal className="w-6 h-6 text-emerald-400" />
                 </div>
-                <div className="flex-1">
+                <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-emerald-300">Prompt Engineer</h3>
                   <p className="text-emerald-400/70 font-semibold">Analogica Pvt. Ltd.</p>
                   <p className="text-gray-400 text-sm">August 2023 - September 2023</p>
                 </div>
               </div>
               <p className="text-gray-300 leading-relaxed">
-                Optimized AI-driven prompts for production LLM systems, achieving a <span className="text-emerald-400 font-semibold">15% measurable increase in model performance and response accuracy</span> through systematic A/B testing and iterative refinement. Collaborated with cross-functional teams to streamline prompt engineering workflows, reducing average query processing time by 20% and establishing best practices for context injection and few-shot learning strategies.
+                Optimized AI-driven prompts achieving <span className="text-emerald-400 font-semibold">15% increase in model performance</span> through systematic A/B testing.
               </p>
             </div>
 
-            {/* Education */}
-            <div className="bg-emerald-900/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/50 transition-all">
+            <div className="bg-emerald-900/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8">
               <div className="flex items-start space-x-4 mb-6">
                 <div className="bg-emerald-500/10 p-3 rounded-xl">
                   <GraduationCap className="w-6 h-6 text-emerald-400" />
@@ -479,25 +550,22 @@ export default function Portfolio() {
               </div>
               
               <div className="space-y-6">
-                <div className="border-l-2 border-emerald-500/50 pl-6 hover:border-emerald-500 transition-colors">
+                <div className="border-l-2 border-emerald-500/50 pl-6">
                   <h4 className="text-lg font-bold text-emerald-300 mb-1">Bachelor of Engineering - Computer Science</h4>
-                  <p className="text-emerald-400/70 font-semibold mb-2">Sambhram Institute of Technology, Bangalore</p>
-                  <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
+                  <p className="text-emerald-400/70 font-semibold mb-2">Sambhram Institute of Technology</p>
+                  <div className="flex items-center gap-2 text-sm text-gray-400">
                     <span>2020 - 2024</span>
                     <span>•</span>
                     <span className="text-emerald-400 font-semibold">CGPA: 7.4/10</span>
                   </div>
                 </div>
                 
-                <div className="border-l-2 border-emerald-500/50 pl-6 hover:border-emerald-500 transition-colors">
+                <div className="border-l-2 border-emerald-500/50 pl-6">
                   <div className="flex items-center space-x-2 mb-2">
                     <Award className="w-5 h-5 text-emerald-400" />
-                    <h4 className="text-lg font-bold text-emerald-300">Java Full Stack Development Certification</h4>
+                    <h4 className="text-lg font-bold text-emerald-300">Java Full Stack Development</h4>
                   </div>
-                  <p className="text-emerald-400/70 font-semibold mb-2">Xworkz</p>
-                  <p className="text-gray-300 text-sm leading-relaxed">
-                    Comprehensive training in enterprise-grade full stack development encompassing Spring Framework ecosystem (Spring MVC, Spring Boot, Spring Data JPA), Hibernate ORM, RESTful API design, React.js integration, and microservices architecture patterns.
-                  </p>
+                  <p className="text-emerald-400/70 font-semibold">Xworkz</p>
                 </div>
               </div>
             </div>
@@ -506,16 +574,16 @@ export default function Portfolio() {
       </section>
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 bg-gradient-to-b from-black via-emerald-950/10 to-black">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6">
+      <section id="contact" className="min-h-screen py-20 bg-gradient-to-b from-black via-emerald-950/10 to-black flex items-center">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
           <div className="flex items-center justify-center space-x-3 mb-12">
             <Mail className="w-8 h-8 text-emerald-400" />
             <h2 className="text-3xl sm:text-4xl font-bold text-emerald-400">Get In Touch</h2>
           </div>
           
           <div className="bg-gradient-to-br from-emerald-900/20 to-emerald-950/20 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 backdrop-blur-sm">
-            <p className="text-center text-gray-300 mb-8 text-lg leading-relaxed">
-              Interested in building intelligent systems together? Let's connect and create something extraordinary.
+            <p className="text-center text-gray-300 mb-8 text-lg">
+              Interested in building intelligent systems together? Let's connect!
             </p>
             
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -537,7 +605,7 @@ export default function Portfolio() {
                 <p className="text-gray-400 text-sm">+91 9353479947</p>
               </a>
               
-              <div className="bg-emerald-900/20 border border-emerald-500/30 rounded-xl p-6 hover:border-emerald-500/60 transition-all text-center sm:col-span-2 lg:col-span-1">
+              <div className="bg-emerald-900/20 border border-emerald-500/30 rounded-xl p-6 text-center sm:col-span-2 lg:col-span-1">
                 <MapPin className="w-8 h-8 text-emerald-400 mx-auto mb-3" />
                 <h3 className="font-semibold text-emerald-300 mb-2">Location</h3>
                 <p className="text-gray-400 text-sm">Bangalore, Karnataka</p>
@@ -578,7 +646,7 @@ export default function Portfolio() {
               <span className="text-emerald-400 font-semibold">Bhuvan M</span>
             </div>
             <p className="text-gray-400 text-sm text-center">
-              © 2025 Bhuvan M. Building Intelligent Futures with AI & Full Stack Engineering.
+              © 2025 Bhuvan M. Building Intelligent Futures with AI.
             </p>
             <div className="flex space-x-4">
               <a 
@@ -602,13 +670,13 @@ export default function Portfolio() {
         </div>
       </footer>
 
-      {/* Scroll to Top Button */}
+      {/* Scroll to Top */}
       {scrollProgress > 20 && (
         <button
           onClick={() => scrollToSection('home')}
-          className="fixed bottom-8 right-8 bg-emerald-600 hover:bg-emerald-500 p-4 rounded-full shadow-lg hover:shadow-emerald-500/50 transition-all z-40 group animate-fade-in"
+          className="fixed bottom-8 right-8 bg-emerald-600 hover:bg-emerald-500 p-4 rounded-full shadow-lg z-40"
         >
-          <ChevronDown className="w-6 h-6 text-white rotate-180 group-hover:scale-110 transition-transform" />
+          <ChevronDown className="w-6 h-6 text-white rotate-180" />
         </button>
       )}
     </div>

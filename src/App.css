@@ -15,12 +15,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background-color: #000;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* Animations */
 .animate-fade-in {
   animation: fadeIn 0.3s ease-in;
 }
@@ -35,4 +37,270 @@ html {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Glitch Effect */
+@keyframes glitch {
+  0% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+
+  20% {
+    transform: translate(-2px, 2px);
+    filter: hue-rotate(90deg);
+  }
+
+  40% {
+    transform: translate(-2px, -2px);
+    filter: hue-rotate(180deg);
+  }
+
+  60% {
+    transform: translate(2px, 2px);
+    filter: hue-rotate(270deg);
+  }
+
+  80% {
+    transform: translate(2px, -2px);
+    filter: hue-rotate(360deg);
+  }
+
+  100% {
+    transform: translate(0);
+    filter: hue-rotate(0deg);
+  }
+}
+
+.glitch-active {
+  animation: glitch 0.3s linear;
+}
+
+/* Scanline Effect */
+@keyframes scanline {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scanline {
+  animation: scanline 6s linear infinite;
+}
+
+/* Robot Float Animation */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+.robot-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* Blink Animation */
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.blink {
+  animation: blink 2s ease-in-out infinite;
+}
+
+/* Pulse Glow */
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    box-shadow: 0 0 5px rgba(16, 185, 129, 0.5),
+      0 0 10px rgba(16, 185, 129, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.8),
+      0 0 30px rgba(16, 185, 129, 0.5);
+  }
+}
+
+/* Text Glow */
+@keyframes textGlow {
+
+  0%,
+  100% {
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+  }
+
+  50% {
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.8),
+      0 0 30px rgba(16, 185, 129, 0.6);
+  }
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Monitor Screen Effect */
+.monitor-screen {
+  position: relative;
+  background: linear-gradient(to bottom,
+      rgba(0, 0, 0, 0.1) 50%,
+      rgba(0, 0, 0, 0) 50%);
+  background-size: 100% 4px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #000;
+  border-left: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #10b981, #059669);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #34d399, #10b981);
+}
+
+/* Hover Effects */
+.hover-glow:hover {
+  animation: pulseGlow 1.5s ease-in-out infinite;
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(16, 185, 129, 0.3);
+  color: #fff;
+}
+
+::-moz-selection {
+  background-color: rgba(16, 185, 129, 0.3);
+  color: #fff;
+}
+
+/* Loading Animation */
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Glitch Text Effect */
+.glitch-text {
+  position: relative;
+}
+
+.glitch-text::before,
+.glitch-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+}
+
+.glitch-text::before {
+  animation: glitchTop 1s linear infinite;
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  -webkit-clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+}
+
+.glitch-text::after {
+  animation: glitchBottom 1.5s linear infinite;
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  -webkit-clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+}
+
+@keyframes glitchTop {
+
+  2%,
+  64% {
+    transform: translate(2px, -2px);
+  }
+
+  4%,
+  60% {
+    transform: translate(-2px, 2px);
+  }
+
+  62% {
+    transform: translate(13px, -1px) skew(-13deg);
+  }
+}
+
+@keyframes glitchBottom {
+
+  2%,
+  64% {
+    transform: translate(-2px, 0);
+  }
+
+  4%,
+  60% {
+    transform: translate(-2px, 0);
+  }
+
+  62% {
+    transform: translate(-22px, 5px) skew(21deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .robot-float {
+    display: none;
+  }
+}
+
+/* Focus styles for accessibility */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #10b981;
+  outline-offset: 2px;
+}
+
+/* Smooth transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
