@@ -16,7 +16,8 @@ const projectsData = [
       type: 'Healthcare',
       tech: ['Java', 'Snowflake', 'Spring'],
       desc: 'Provider Care Management Solutions with high-performance data processing.',
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      url: 'https://full-stack-java-project.onrender.com'
     },
     {
       id: 'medisales',
@@ -24,7 +25,8 @@ const projectsData = [
       type: 'E-Commerce',
       tech: ['Java', 'Hibernate', 'MySQL'],
       desc: 'Comprehensive medicine sales platform for manufacturers and vendors.',
-      color: 'bg-green-500'
+      color: 'bg-green-500',
+      url: 'https://full-stack-java-project.onrender.com'
     }
 ];
 
@@ -117,9 +119,14 @@ export default function ProjectsApp() {
                     <div className="mt-auto border-t border-gray-100 pt-6">
                         <button 
                             className="bg-gray-900 text-white px-6 py-2.5 rounded-lg hover:bg-gray-800 transition-colors shadow-lg shadow-gray-200"
-                            onClick={(e) => { e.stopPropagation(); /* In reality open specific link */ }}
+                            onClick={(e) => { 
+                                e.stopPropagation(); 
+                                if (selectedProject.url) {
+                                    window.open(selectedProject.url, '_blank');
+                                }
+                            }}
                         >
-                            View Source
+                            {selectedProject.url ? 'View Live' : 'View Source'}
                         </button>
                     </div>
                 </div>
@@ -130,8 +137,22 @@ export default function ProjectsApp() {
                             <div 
                                 key={project.id}
                                 className="group flex flex-col items-center p-4 rounded-xl hover:bg-blue-50 cursor-pointer transition-colors"
-                                onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
-                                onDoubleClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
+                                onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    if (project.url) {
+                                        window.open(project.url, '_blank');
+                                    } else {
+                                        setSelectedProject(project); 
+                                    }
+                                }}
+                                onDoubleClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    if (project.url) {
+                                        window.open(project.url, '_blank');
+                                    } else {
+                                        setSelectedProject(project); 
+                                    }
+                                }}
                             >
                                 <div className={`w-20 h-20 ${project.color} rounded-2xl shadow-md flex items-center justify-center mb-3 group-hover:scale-105 transition-transform`}>
                                     <FileCode className="text-white w-10 h-10" />
@@ -143,7 +164,14 @@ export default function ProjectsApp() {
                             <div 
                                 key={project.id}
                                 className="flex items-center p-2 rounded hover:bg-blue-50 cursor-pointer border-b border-gray-50 last:border-0"
-                                onClick={(e) => { e.stopPropagation(); setSelectedProject(project); }}
+                                onClick={(e) => { 
+                                    e.stopPropagation(); 
+                                    if (project.url) {
+                                        window.open(project.url, '_blank');
+                                    } else {
+                                        setSelectedProject(project); 
+                                    }
+                                }}
                             >
                                 <div className={`w-8 h-8 ${project.color} rounded-lg flex items-center justify-center mr-3`}>
                                    <FileCode className="text-white w-4 h-4" />

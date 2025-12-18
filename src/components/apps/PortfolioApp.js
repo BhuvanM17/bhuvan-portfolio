@@ -119,7 +119,8 @@ export default function PortfolioApp() {
         'Real-time reporting and analytics dashboard'
       ],
       status: 'Completed',
-      impact: 'Improved data processing speed by 40%'
+      impact: 'Improved data processing speed by 40%',
+      url: 'https://full-stack-java-project.onrender.com'
     },
     {
       title: 'MediSales - Medicine E-Commerce Platform',
@@ -133,7 +134,8 @@ export default function PortfolioApp() {
         'Responsive UI with dynamic content loading'
       ],
       status: 'Completed',
-      impact: 'Streamlined operations for 50+ vendors'
+      impact: 'Streamlined operations for 50+ vendors',
+      url: 'https://full-stack-java-project.onrender.com'
     }
   ];
 
@@ -329,19 +331,25 @@ export default function PortfolioApp() {
           
           <div className="space-y-8">
             {projects.map((project, idx) => (
-              <div key={idx} className="bg-gradient-to-br from-emerald-900/10 to-emerald-950/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/50 transition-all">
+              <div 
+                key={idx} 
+                className={`bg-gradient-to-br from-emerald-900/10 to-emerald-950/10 border border-emerald-500/30 rounded-2xl p-6 sm:p-8 hover:border-emerald-500/50 transition-all ${project.url ? 'cursor-pointer hover:bg-emerald-900/20' : ''}`}
+                onClick={() => project.url && window.open(project.url, '_blank')}
+              >
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4">
                   <div>
                     <h3 className="text-xl sm:text-2xl font-bold text-emerald-300 mb-2">{project.title}</h3>
                     <span className="text-emerald-400/70 text-sm font-semibold">{project.type}</span>
                   </div>
-                  <span className={`px-4 py-1.5 rounded-full text-xs font-semibold ${
-                    project.status === 'In Development' 
-                      ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' 
-                      : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                  }`}>
-                    {project.status}
-                  </span>
+                  <div className="flex items-center space-x-3 mt-2 sm:mt-0">
+                    <span className={`px-4 py-1.5 rounded-full text-xs font-semibold ${
+                      project.status === 'In Development' 
+                        ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' 
+                        : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
+                    }`}>
+                      {project.status}
+                    </span>
+                  </div>
                 </div>
                 
                 <p className="text-gray-300 mb-6">{project.description}</p>
@@ -355,13 +363,24 @@ export default function PortfolioApp() {
                   </div>
                 )}
                 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {project.tech.map((tech, i) => (
                     <span key={i} className="bg-emerald-900/30 border border-emerald-500/30 px-3 py-1 rounded-lg text-xs text-emerald-300">
                       {tech}
                     </span>
                   ))}
                 </div>
+
+                {project.url && (
+                  <div className="mt-4 pt-4 border-t border-emerald-900/30">
+                    <button 
+                      className="inline-flex items-center space-x-2 text-emerald-400 hover:text-emerald-300 font-semibold text-sm transition-colors group"
+                    >
+                      <span>View Live Project</span>
+                      <Monitor className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </div>
+                )}
               </div>
             ))}
           </div>
