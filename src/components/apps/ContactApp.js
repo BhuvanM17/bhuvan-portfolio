@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Send, User, AtSign, MapPin, Phone } from 'lucide-react';
+import { Send, AtSign, MapPin, Phone } from 'lucide-react';
 import profile from '../../assets/profile.jpeg';
 
 export default function ContactApp() {

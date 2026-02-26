@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Code, Brain, Database, Server, Mail, Phone, MapPin, Github, Linkedin, ChevronDown, Terminal, Cpu, Sparkles, Zap, Award, Briefcase, GraduationCap, Rocket, Menu, X, Download, Monitor } from 'lucide-react';
+import { Code, Brain, Database, Server, Mail, Phone, MapPin, Github, Linkedin, ChevronDown, Terminal, Cpu, Sparkles, Award, Briefcase, GraduationCap, Rocket, Menu, X, Monitor } from 'lucide-react';
 import profile from '../../assets/profile.jpeg';
 
 export default function PortfolioApp() {
@@ -7,9 +7,7 @@ export default function PortfolioApp() {
   const [isVisible, setIsVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [typedText, setTypedText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
+
   const lastSectionRef = useRef('home');
   const containerRef = useRef(null);
 
@@ -46,8 +44,6 @@ export default function PortfolioApp() {
           
           if (offsetTop <= 300 && offsetTop >= -300) {
             if (lastSectionRef.current !== section) {
-              setIsTransitioning(true);
-              setTimeout(() => setIsTransitioning(false), 500);
               lastSectionRef.current = section;
             }
             setActiveSection(section);
@@ -65,23 +61,18 @@ export default function PortfolioApp() {
 
   // Typing effect
   useEffect(() => {
-    setIsTyping(true);
-    setTypedText('');
-    
     const text = sectionTexts[activeSection] || '';
     let currentIndex = 0;
     
     const typingInterval = setInterval(() => {
-      if (currentIndex <= text.length) {
-        setTypedText(text.slice(0, currentIndex));
-        currentIndex++;
-      } else {
-        setIsTyping(false);
+      if (currentIndex > text.length) {
         clearInterval(typingInterval);
       }
+      currentIndex++;
     }, 30);
 
     return () => clearInterval(typingInterval);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeSection]);
 
   const skills = {

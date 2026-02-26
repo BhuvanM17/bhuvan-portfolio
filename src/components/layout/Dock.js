@@ -29,7 +29,7 @@ const DockItem = ({ icon: Icon, label, onClick, isOpen }) => {
 };
 
 export default function Dock() {
-  const { openApp, openApps, toggleApp, activeApp } = useStore();
+  const { toggleApp, activeApp } = useStore();
 
   const dockItems = [
     { id: 'finder', label: 'Finder', icon: Folder, component: 'finder' }, 

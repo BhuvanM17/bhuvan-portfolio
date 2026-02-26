@@ -9,9 +9,7 @@ import {
   Search,
   LayoutGrid,
   List,
-  FileText,
-  Image as ImageIcon,
-  MoreHorizontal
+  FileText
 } from 'lucide-react';
 import profile from '../../assets/profile.jpeg';
 
@@ -29,7 +27,7 @@ export default function FinderApp() {
 
   const files = [
     { id: 1, name: 'Profile.jpg', type: 'image', size: '2.4 MB', src: profile },
-    { id: 2, name: 'Resume.pdf', type: 'pdf', size: '156 KB' },
+    { id: 2, name: 'Resume.pdf', type: 'pdf', size: '156 KB', url: 'https://drive.google.com/file/d/1cjXWjjr6dStGqq1pVyDeV-vWjxTkUcn5/view?usp=sharing' },
     { id: 3, name: 'Project_Specs.docx', type: 'doc', size: '45 KB' },
     { id: 4, name: 'Portfolio_v2', type: 'folder', size: '--' },
     { id: 5, name: 'design-system', type: 'folder', size: '--' },
@@ -109,6 +107,7 @@ export default function FinderApp() {
                     selectedItem === file.id ? 'bg-blue-100 border border-blue-200 shadow-sm' : 'hover:bg-gray-50'
                   }`}
                   onClick={(e) => { e.stopPropagation(); setSelectedItem(file.id); }}
+                  onDoubleClick={(e) => { e.stopPropagation(); if (file.url) window.open(file.url, '_blank'); }}
                 >
                   <div className="w-16 h-16 mb-2 flex items-center justify-center relative">
                     {file.type === 'image' && file.src ? (
@@ -136,6 +135,7 @@ export default function FinderApp() {
                     selectedItem === file.id ? 'bg-blue-600 text-white even:bg-blue-600' : 'hover:bg-blue-50'
                   }`}
                   onClick={(e) => { e.stopPropagation(); setSelectedItem(file.id); }}
+                  onDoubleClick={(e) => { e.stopPropagation(); if (file.url) window.open(file.url, '_blank'); }}
                 >
                     <div className="w-5 mr-3">
                          {file.type === 'folder' ? <Folder size={16} className={selectedItem === file.id ? 'text-white fill-white' : 'text-blue-400'} /> : <FileText size={16} />}

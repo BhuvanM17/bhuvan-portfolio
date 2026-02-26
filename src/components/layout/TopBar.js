@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wifi, Battery, Search, Command } from 'lucide-react';
+import { Wifi, Search } from 'lucide-react';
 import { format } from 'date-fns';
 import profile from '../../assets/profile.jpeg';
 
