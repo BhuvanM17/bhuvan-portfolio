@@ -11,6 +11,15 @@ const projectsData = [
       color: 'bg-purple-500'
     },
     {
+      id: 'rag',
+      title: 'RAG Chatbot',
+      type: 'AI / NLP',
+      tech: ['Python', 'FastAPI', 'Pinecone', 'LangChain', 'OpenAI'],
+      desc: 'Retrieval-Augmented Generation chatbot that answers questions from your documents using vector search and LLMs.',
+      color: 'bg-indigo-500',
+      url: 'https://ragtool.vercel.app/'
+    },
+    {
       id: 'pcms',
       title: 'PCMS Health',
       type: 'Healthcare',

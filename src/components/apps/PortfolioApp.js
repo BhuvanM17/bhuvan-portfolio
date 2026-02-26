@@ -108,6 +108,21 @@ export default function PortfolioApp() {
       impact: 'Expected to reduce query resolution time by 60%'
     },
     {
+      title: 'RAG Chatbot - AI Document Q&A',
+      type: 'AI / NLP Personal Project',
+      description: 'Built a Retrieval-Augmented Generation (RAG) chatbot that ingests documents, chunks and embeds them into a vector database (Pinecone), and answers user questions using LLM with context-aware retrieval.',
+      tech: ['Python', 'FastAPI', 'LangChain', 'Pinecone', 'OpenAI', 'React', 'Vercel'],
+      highlights: [
+        'PDF ingestion with intelligent text chunking',
+        'Pinecone vector DB for persistent semantic search',
+        'Context-aware Q&A powered by LLM',
+        'Session management with New Document support'
+      ],
+      status: 'Completed',
+      impact: 'Deployed on Vercel — live and publicly accessible',
+      url: 'https://ragtool.vercel.app/'
+    },
+    {
       title: 'PCMS - Provider Care Management Solutions',
       type: 'Enterprise Healthcare Platform',
       description: 'Developed a robust healthcare management system with advanced data processing capabilities using Java and Snowflake integration.',
@@ -552,7 +567,7 @@ export default function PortfolioApp() {
                   <Github className="w-6 h-6 text-emerald-400 group-hover:scale-110 transition-transform" />
                 </a>
                 <a 
-                  href="https://linkedin.com/in/bhuvan-m" 
+                  href="https://www.linkedin.com/in/bhuvan-m-600828217/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
                   className="bg-emerald-900/20 border border-emerald-500/30 p-4 rounded-lg hover:border-emerald-500/60 hover:bg-emerald-900/30 transition-all group"
