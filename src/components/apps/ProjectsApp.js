@@ -3,6 +3,14 @@ import { Folder, FileCode, ChevronRight, LayoutGrid, List } from 'lucide-react';
 
 const projectsData = [
     {
+      id: 'bizzhub-n8n',
+      title: 'BizzHub AI & n8n Automation',
+      type: 'Automation / AI Agent',
+      tech: ['n8n', 'Google Gemini', 'Google Sheets', 'Gmail API', 'React'],
+      desc: 'AI-driven lead qualification chatbot and workflow automation system built with n8n and Google Gemini. Automatically extracts prospect information, updates Google Sheets, sends Gmail notifications, and features a frontend dashboard with AI-assisted follow-up email drafting.',
+      color: 'bg-emerald-500'
+    },
+    {
       id: 'cognito',
       title: 'Agentic AI',
       type: 'Autonomous Agent',
