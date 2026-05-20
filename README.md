@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Bhuvan M — Interactive OS-Style Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to my portfolio! This is an interactive, macOS/OS-styled web desktop designed to showcase my engineering projects, skills, and contact information. Built with a modern frontend stack and styled for premium visual excellence.
 
-## Available Scripts
+🌐 **Live Portfolio:** [Visit my website](https://github.com/BhuvanM17) *(or insert your deployment URL)*
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Key Features
 
-Runs the app in the development mode.\
+* **macOS/OS Interface:** Draggable, resizable windows, a fully responsive desktop system dock, and top-bar clock/menus.
+* **Interactive Projects App:** Explore my key developments organized in a clean finder/directory view.
+* **Terminal App:** A functional command-line simulator where visitors can run commands to learn about my background.
+* **Responsive Styling:** Sleek animations, high-contrast layouts, and glassmorphism styling utilizing Tailwind CSS.
+
+---
+
+## 🛠️ Featured Project: BizzHub AI & n8n Automation
+
+A multi-stage lead management and customer qualification pipeline combining AI agents with serverless workflows:
+* **Workflow Engine:** Designed and built using **n8n** to automate the lead-to-outreach cycle.
+* **AI Qualification:** Leverages **Google Gemini** to converse with prospects, extract qualification details (space type, seat counts, locations, duration, contact details), and package it into structured JSON objects.
+* **Data Pipelines:** Integrated with **Google Sheets API** for secure, automated CRM logging.
+* **Gmail Notification Alerts:** Sends instant rich-text alerts to the sales team upon lead qualification.
+* **AI Follow-up Dashboard:** Facilitates drafting and sending personalized follow-up emails directly to qualified leads using automated templates.
+
+### Tech Stack Used in BizzHub:
+`n8n` | `Google Gemini API` | `Google Sheets API` | `Gmail API` | `React` | `Tailwind CSS`
+
+---
+
+## 💻 Technical Stack & Libraries
+
+* **Core:** React, JavaScript (ES6+), HTML5, CSS3
+* **Styling & Motion:** Tailwind CSS, Framer Motion, Lucide React (Icons)
+* **State Management:** Zustand (for OS window tracking, active app layouts, and desktop state)
+* **Build Tools:** Create React App, npm
+
+---
+
+## 🛠️ Getting Started
+
+To run this project locally, clone the repository and execute the following:
+
+### 1. Install Dependencies
+```bash
+npm install
+```
+
+### 2. Run in Development Mode
+```bash
+npm start
+```
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 3. Build for Production
+```bash
+npm run build
+```
+This compiles and optimizes your production assets inside the `build` directory, ready to deploy.
