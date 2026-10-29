@@ -1,60 +1,36 @@
-# Bhuvan M — Interactive OS-Style Portfolio
+# Bhuvan M — Python Backend & Applied AI
 
-Welcome to my portfolio! This is an interactive, macOS/OS-styled web desktop designed to showcase my engineering projects, skills, and contact information. Built with a modern frontend stack and styled for premium visual excellence.
+A responsive portfolio focused on AI applications, backend engineering, and Python tools.
 
-🌐 **Live Portfolio:** [Visit my website](https://github.com/BhuvanM17) *(or insert your deployment URL)*
+**Website:** https://bhuvan-portfolio-five.vercel.app
 
----
+## Selected work
 
-## 🚀 Key Features
+- [AI TaskHub](https://github.com/BhuvanM17/ai-taskhub): authenticated FastAPI background jobs with PostgreSQL and Redis/RQ.
+- [RetrievalBench](https://github.com/BhuvanM17/retrievalbench): offline RAG retrieval evaluation with a BM25 baseline. Run locally as a Python CLI.
+- [GridQuest](https://github.com/BhuvanM17/gridquest-python): a local Pygame maze game with procedural generation and BFS pursuit.
+- [Document RAG](https://github.com/BhuvanM17/DOC-RAG): document Q&A with FastAPI, Gemini, Pinecone, and React.
+- [DailyOps Agent](https://github.com/BhuvanM17/personal_assistant_using_langgraph): tool workflows, persistent memory, and approval steps using LangGraph.
+- [AI Invoice Assistant](https://github.com/BhuvanM17/AI-Invoice-Assistant-Pro): conversational invoice workflows and PDF generation.
 
-* **macOS/OS Interface:** Draggable, resizable windows, a fully responsive desktop system dock, and top-bar clock/menus.
-* **Interactive Projects App:** Explore my key developments organized in a clean finder/directory view.
-* **Terminal App:** A functional command-line simulator where visitors can run commands to learn about my background.
-* **Responsive Styling:** Sleek animations, high-contrast layouts, and glassmorphism styling utilizing Tailwind CSS.
+The portfolio includes category filters, accessible navigation, project source links, and contact links. Source links point to repositories; they do not imply hosted demos of the backend, CLI, or desktop game.
 
----
+## Development
 
-## 🛠️ Featured Project: BizzHub AI & n8n Automation
+Node.js and npm are required. This repository retains its existing React / Create React App build setup.
 
-A multi-stage lead management and customer qualification pipeline combining AI agents with serverless workflows:
-* **Workflow Engine:** Designed and built using **n8n** to automate the lead-to-outreach cycle.
-* **AI Qualification:** Leverages **Google Gemini** to converse with prospects, extract qualification details (space type, seat counts, locations, duration, contact details), and package it into structured JSON objects.
-* **Data Pipelines:** Integrated with **Google Sheets API** for secure, automated CRM logging.
-* **Gmail Notification Alerts:** Sends instant rich-text alerts to the sales team upon lead qualification.
-* **AI Follow-up Dashboard:** Facilitates drafting and sending personalized follow-up emails directly to qualified leads using automated templates.
-
-### Tech Stack Used in BizzHub:
-`n8n` | `Google Gemini API` | `Google Sheets API` | `Gmail API` | `React` | `Tailwind CSS`
-
----
-
-## 💻 Technical Stack & Libraries
-
-* **Core:** React, JavaScript (ES6+), HTML5, CSS3
-* **Styling & Motion:** Tailwind CSS, Framer Motion, Lucide React (Icons)
-* **State Management:** Zustand (for OS window tracking, active app layouts, and desktop state)
-* **Build Tools:** Create React App, npm
-
----
-
-## 🛠️ Getting Started
-
-To run this project locally, clone the repository and execute the following:
-
-### 1. Install Dependencies
 ```bash
-npm install
-```
-
-### 2. Run in Development Mode
-```bash
+npm ci
 npm start
 ```
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-### 3. Build for Production
+## Checks and build
+
 ```bash
+CI=true npm test -- --watchAll=false --runInBand
 npm run build
 ```
-This compiles and optimizes your production assets inside the `build` directory, ready to deploy.
+
+On Windows PowerShell, set `$env:CI = 'true'` before running the test command without the `CI=true` prefix. The production build is written to `build/`.
+
+The tests cover project links and type labels, category filtering, and navigation/contact links. Site changes were created with AI assistance and reviewed against the public project descriptions.
