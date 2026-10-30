@@ -1,6 +1,6 @@
 # Bhuvan M — Python Backend & Applied AI
 
-A responsive portfolio focused on AI applications, backend engineering, and Python tools.
+A monochrome, typography-led portfolio focused on AI applications, backend engineering, and Python tools.
 
 **Website:** https://bhuvan-portfolio-five.vercel.app
 
@@ -34,3 +34,9 @@ npm run build
 On Windows PowerShell, set `$env:CI = 'true'` before running the test command without the `CI=true` prefix. The production build is written to `build/`.
 
 The tests cover project links and type labels, category filtering, and navigation/contact links. Site changes were created with AI assistance and reviewed against the public project descriptions.
+
+## Visual direction
+
+The editorial layout is inspired by [Olha Lazarieva's portfolio](https://www.awwwards.com/sites/olha-lazarieva): oversized condensed type, a monochrome portrait, bracket navigation, and generous whitespace. This is an original adaptation with Bhuvan's own public photo, project content, and original project artwork. No reference-site photos, awards, or copy are reused.
+
+Includes a swipeable horizontal project gallery, category filters, keyboard-accessible mobile menu, expandable expertise details, and reduced-motion support. Fonts are self-hosted through Fontsource. See [design evidence and implementation choices](docs/DESIGN.md).

@@ -1,450 +1,615 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
-  ArrowDown,
-  Github,
-  Linkedin,
-  Mail,
-  Braces,
-  Workflow,
-  Database,
-  Terminal,
-  MapPin,
+  ArrowDownRight,
+  ArrowLeft,
+  ArrowRight,
+  Plus,
+  Minus,
+  X,
 } from "lucide-react";
-import profile from "./assets/profile.jpeg";
+import "@fontsource-variable/sofia-sans-condensed";
+import "@fontsource/spline-sans-mono/400.css";
+import portrait from "./assets/profile.jpeg";
+import game from "./assets/gridquest.png";
+import { github, projects, filters } from "./projects";
 import "./App.css";
-const github = "https://github.com/BhuvanM17";
-const projects = [
+
+const navigation = [
+  ["About", "#about", "about me"],
+  ["Projects", "#projects", "works"],
+  ["Expertise", "#expertise", "expertise"],
+  ["Contact", "#contact", "connect"],
+];
+const specialties = [
   {
-    name: "AI TaskHub",
-    category: "Backend & APIs",
-    kind: "Backend service",
-    repo: "ai-taskhub",
-    description:
-      "An authenticated job API for summarization and extraction, with owner-isolated results, idempotent requests, and Redis/RQ background workers. Includes a deterministic demo and an optional model adapter.",
-    tech: ["FastAPI", "PostgreSQL", "Redis / RQ", "Docker"],
-    visual: "taskhub",
-    caption: "01 / BACKEND ENGINEERING",
-    code: ["request", "validate", "process", "respond"],
+    title: "Python backends",
+    description: "Clear interfaces. Reliable application logic.",
+    details:
+      "Request validation, authentication, and background processing. Building APIs with FastAPI, SQLAlchemy, relational databases, and Redis workers.",
+    tags: ["FastAPI", "REST APIs", "SQL", "Redis"],
   },
   {
-    name: "RetrievalBench",
-    category: "Python & algorithms",
-    kind: "Offline CLI",
-    repo: "retrievalbench",
-    description:
-      "An offline RAG retrieval evaluation toolkit. Compare a BM25 baseline with ranked results using Recall, MRR, and nDCG—all in standard-library Python.",
-    tech: ["Python", "BM25", "RAG evaluation"],
-    visual: "retrieval",
-    caption: "02 / RETRIEVAL EVALUATION",
-    code: ["Recall@k", "MRR@k", "nDCG@k"],
+    title: "Applied AI",
+    description: "Language models connected to useful workflows.",
+    details:
+      "LLM integration, prompt engineering, structured outputs, and tool orchestration. I build around model limitations with validation and practical error handling.",
+    tags: ["LangChain", "LangGraph", "LLMs", "Tool calling"],
   },
   {
-    name: "GridQuest",
-    category: "Python & algorithms",
-    kind: "Desktop game",
-    repo: "gridquest-python",
-    description:
-      "A local Pygame maze game with seeded procedural generation and a pursuing enemy that finds its route using breadth-first search.",
-    tech: ["Python", "Pygame", "BFS"],
-    visual: "maze",
-    caption: "03 / ALGORITHMS IN PLAY",
-    code: [],
-  },
-  {
-    name: "Document RAG",
-    category: "AI applications",
-    kind: "Document Q&A",
-    repo: "DOC-RAG",
-    description:
-      "Ask questions about documents through a retrieval-augmented pipeline: a FastAPI backend, Gemini responses, Pinecone retrieval, and a React interface.",
-    tech: ["FastAPI", "Gemini", "Pinecone", "React"],
-    visual: "document",
-    caption: "04 / CONTEXT-AWARE ANSWERS",
-    code: ["documents", "retrieve", "generate"],
-  },
-  {
-    name: "DailyOps Agent",
-    category: "AI applications",
-    kind: "Agent workflow",
-    repo: "personal_assistant_using_langgraph",
-    description:
-      "A personal assistant built around LangGraph workflows, tool use, persistent Chroma memory, and human approval steps.",
-    tech: ["Python", "LangGraph", "Chroma"],
-    visual: "agent",
-    caption: "05 / AGENT ORCHESTRATION",
-    code: ["plan", "tools", "approval", "memory"],
-  },
-  {
-    name: "AI Invoice Assistant",
-    category: "AI applications",
-    kind: "Full-stack application",
-    repo: "AI-Invoice-Assistant-Pro",
-    description:
-      "Conversational invoice creation with structured validation and PDF generation, connecting a Gemini-powered Flask backend to a React frontend.",
-    tech: ["Python", "Flask", "Gemini", "React"],
-    visual: "invoice",
-    caption: "06 / STRUCTURED AI WORKFLOWS",
-    code: ["conversation", "validation", "invoice.pdf"],
+    title: "Retrieval & evaluation",
+    description: "Find the right context. Measure the result.",
+    details:
+      "RAG pipelines, embeddings, and retrieval evaluation. Comparing ranked results with Recall, MRR, and nDCG to understand what the retriever actually finds.",
+    tags: ["RAG", "Chroma", "Pinecone", "BM25"],
   },
 ];
-const filters = [
-  "All projects",
-  "AI applications",
-  "Backend & APIs",
-  "Python & algorithms",
-];
-function ProjectVisual({ project }) {
+
+function useReveals() {
+  useEffect(() => {
+    if (
+      !window.IntersectionObserver ||
+      window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+    )
+      return;
+    const observer = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        }),
+      { threshold: 0.08 },
+    );
+    document.documentElement.classList.add("reveal-enabled");
+    document
+      .querySelectorAll("[data-reveal]")
+      .forEach((node) => observer.observe(node));
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("reveal-enabled");
+    };
+  }, []);
+}
+
+function ProjectArt({ project }) {
   if (project.visual === "maze")
     return (
-      <div className="project-visual maze-visual" aria-hidden="true">
-        <div className="maze-grid">
-          {Array.from(
-            {
-              length: 77,
-            },
-            (_, i) => (
-              <span
-                key={i}
-                className={
-                  [
-                    0, 1, 12, 23, 24, 25, 36, 47, 58, 59, 60, 61, 72, 73, 74,
-                    75, 76,
-                  ].includes(i)
-                    ? "maze-path"
-                    : (i * 7 + (i % 3)) % 4 === 0
-                      ? "maze-wall"
-                      : ""
-                }
-              />
-            ),
-          )}
+      <div className="project-art game-art">
+        <img
+          src={game}
+          alt="GridQuest gameplay with a generated maze and pursuing hunter"
+          loading="lazy"
+          width="1100"
+          height="820"
+        />
+      </div>
+    );
+  if (project.visual === "retrieval")
+    return (
+      <div className="project-art benchmark-art" aria-hidden="true">
+        <div className="report-sheet">
+          <div className="report-top">
+            retrievalbench<span>PYTHON / CLI</span>
+          </div>
+          <h4>
+            Better context.
+            <br />
+            Measured.
+          </h4>
+          <div className="metric-labels">
+            <span>Recall@K</span>
+            <span>MRR@K</span>
+            <span>nDCG@K</span>
+          </div>
+          <div className="report-rule" />
+          <p>$ python -m retrievalbench evaluate</p>
+          <small>ranked results → relevance judgments → report</small>
         </div>
-        <span className="visual-note">seed → maze → shortest path</span>
+      </div>
+    );
+  if (project.visual === "taskhub")
+    return (
+      <div className="project-art task-art" aria-hidden="true">
+        <div className="api-sheet">
+          <div className="app-window-top">
+            <i />
+            <i />
+            <i />
+            <span>taskhub / backend</span>
+          </div>
+          <div className="api-content">
+            <small>ASYNCHRONOUS TEXT PROCESSING</small>
+            <h4>
+              Accept now.
+              <br />
+              Process later.
+            </h4>
+            <div className="api-call">
+              <b>POST</b>
+              <span>/v1/jobs</span>
+              <em>202 Accepted</em>
+            </div>
+            <div className="job-path">
+              <span>queued</span>
+              <span>running</span>
+              <span>succeeded</span>
+            </div>
+            <p>FastAPI / PostgreSQL / Redis</p>
+          </div>
+        </div>
       </div>
     );
   return (
     <div
-      className={`project-visual ${project.visual}-visual`}
+      className={`project-art diagram-art art-${project.visual}`}
       aria-hidden="true"
     >
-      <div className="visual-grid" />
-      <div className="visual-flow">
-        {project.code.map((item, index) => (
-          <React.Fragment key={item}>
-            {index > 0 && <span className="flow-line" />}
-            <span className="flow-node">{item}</span>
+      <span className="diagram-label">{project.kind} / SYSTEM STUDY</span>
+      <div className="diagram-nodes">
+        {project.code.map((label, index) => (
+          <React.Fragment key={label}>
+            {index > 0 && <span className="diagram-line" />}
+            <span>{label}</span>
           </React.Fragment>
         ))}
       </div>
-      <span className="visual-note">
-        {project.visual === "retrieval"
-          ? "measure retrieval. compare approaches."
-          : "from input to useful output."}
+      <span className="diagram-title">
+        {project.visual === "document" ? (
+          <>
+            Context
+            <br />
+            changes everything.
+          </>
+        ) : project.visual === "agent" ? (
+          <>
+            Tools.
+            <br />
+            With direction.
+          </>
+        ) : (
+          <>
+            Conversation
+            <br />
+            to structure.
+          </>
+        )}
       </span>
     </div>
   );
 }
+
 function App() {
   const [filter, setFilter] = useState("All projects");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openSpecialty, setOpenSpecialty] = useState(null);
+  const menuButton = useRef(null),
+    menuPanel = useRef(null),
+    gallery = useRef(null);
+  useReveals();
   const visible = projects.filter(
     (project) => filter === "All projects" || project.category === filter,
   );
+  useEffect(() => {
+    if (!menuOpen) return;
+    const before = document.body.style.overflow;
+    const returnFocus = menuButton.current;
+    document.body.style.overflow = "hidden";
+    const focusable = () =>
+      Array.from(menuPanel.current?.querySelectorAll("a,button") || []);
+    focusable()[0]?.focus();
+    const onKey = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Tab") {
+        const items = focusable(),
+          first = items[0],
+          last = items[items.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last?.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first?.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = before;
+      document.removeEventListener("keydown", onKey);
+      returnFocus?.focus();
+    };
+  }, [menuOpen]);
+  function selectFilter(value) {
+    setFilter(value);
+    if (gallery.current) gallery.current.scrollLeft = 0;
+  }
+  function shiftGallery(direction) {
+    const node = gallery.current;
+    const reduced = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    node?.scrollBy({
+      left: direction * node.clientWidth * 0.78,
+      behavior: reduced ? "auto" : "smooth",
+    });
+  }
   return (
     <>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
-      <header className="site-header">
-        <div className="container header-inner">
-          <a className="wordmark" href="#home" aria-label="Bhuvan M home">
-            <span className="brand-mark">b.</span>Bhuvan M
-            <span className="wordmark-dot">/</span>
-          </a>
-          <nav aria-label="Main navigation">
-            <a href="#projects">Projects</a>
-            <a href="#about">About</a>
-            <a href="#contact">
-              Contact <ArrowUpRight size={14} />
+      <header
+        className="site-header page-width"
+        aria-hidden={menuOpen || undefined}
+        inert={menuOpen || undefined}
+      >
+        <a className="wordmark" href="#home" aria-label="Bhuvan M home">
+          BHUVAN
+          <br />M<span>©</span>
+        </a>
+        <nav className="desktop-nav" aria-label="Main navigation">
+          {navigation.map(([label, href, text]) => (
+            <a key={href} aria-label={label} href={href}>
+              [ {text} ]
             </a>
-          </nav>
-        </div>
+          ))}
+        </nav>
+        <a className="contact-shortcut" href="#contact">
+          CONTACT ME <ArrowUpRight size={19} />
+        </a>
+        <button
+          className="menu-toggle"
+          ref={menuButton}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="site-menu"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          menu <span>+</span>
+        </button>
       </header>
-      <main id="main">
+      {menuOpen && (
+        <div
+          id="site-menu"
+          className="menu-overlay"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Site menu"
+          ref={menuPanel}
+        >
+          <div className="menu-overlay-top">
+            <span>BHUVAN M / PORTFOLIO</span>
+            <button onClick={() => setMenuOpen(false)} aria-label="Close menu">
+              <X size={30} />
+            </button>
+          </div>
+          <nav aria-label="Expanded navigation">
+            {navigation.map(([label, href], i) => (
+              <a key={href} href={href} onClick={() => setMenuOpen(false)}>
+                <small>0{i + 1}</small>
+                {label}
+                <ArrowUpRight />
+              </a>
+            ))}
+          </nav>
+          <a className="menu-mail" href="mailto:bhuvanshetty317@gmail.com">
+            bhuvanshetty317@gmail.com ↗
+          </a>
+        </div>
+      )}
+      <main
+        id="main"
+        aria-hidden={menuOpen || undefined}
+        inert={menuOpen || undefined}
+      >
         <section
-          className="hero container"
           id="home"
+          className="hero page-width"
           aria-labelledby="hero-title"
         >
-          <div className="hero-copy">
-            <p className="eyebrow">
-              <span className="status-dot" /> AI & PYTHON BACKEND ENGINEERING
-            </p>
-            <h1 id="hero-title">
-              Building AI systems.
-              <br />
-              <span>
-                Engineering the
-                <br className="desktop-break" /> foundation.
-              </span>
-            </h1>
-            <p className="hero-description">
-              I'm Bhuvan, a software engineer turning ideas into practical AI
-              applications, thoughtful APIs, and reliable Python tools.
-            </p>
-            <div className="hero-actions">
-              <a className="button button-primary" href="#projects">
-                Explore my work <ArrowDown size={17} />
-              </a>
-              <a
-                className="text-link"
-                href={github}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                GitHub <ArrowUpRight size={17} />
-              </a>
+          <div className="hero-kicker">
+            <span>PYTHON / BACKEND / APPLIED AI</span>
+            <span>PORTFOLIO — 2026</span>
+          </div>
+          <h1 id="hero-title" aria-label="AI & Python developer">
+            AI DEVELOPER
+          </h1>
+          <div className="hero-composition">
+            <div className="hero-disciplines">
+              <p>/ PYTHON BACKENDS</p>
+              <p>/ AI APPLICATIONS</p>
+              <p>/ RETRIEVAL SYSTEMS</p>
             </div>
+            <figure className="hero-portrait">
+              <img
+                src={portrait}
+                alt="Bhuvan M"
+                width="360"
+                height="440"
+                fetchPriority="high"
+              />
+              <figcaption>BHUVAN M — SOFTWARE ENGINEER</figcaption>
+            </figure>
             <p className="hero-location">
-              <MapPin size={14} /> Bangalore, India <span>•</span> Python · AI ·
-              Backend
+              BASED IN
+              <br />
+              BANGALORE, INDIA
+            </p>
+            <p className="hero-description">
+              I BUILD PRACTICAL AI APPLICATIONS AND THE PYTHON BACKENDS BEHIND
+              THEM. CLEAR LOGIC. USEFUL TOOLS. THOUGHTFUL ENGINEERING.
             </p>
           </div>
-          <div
-            className="hero-system"
-            aria-label="Engineering focus: Python backends, AI workflows, and retrieval evaluation"
-          >
-            <div className="system-top">
+          <div className="hero-bottom">
+            <a className="hero-contact" href="mailto:bhuvanshetty317@gmail.com">
               <span>
-                <span className="status-dot" /> ENGINEERING FOCUS
+                LET'S BUILD SOMETHING <ArrowDownRight size={15} />
               </span>
-              <Braces size={18} />
-            </div>
-            <div className="system-orbit orbit-one" />
-            <div className="system-orbit orbit-two" />
-            <div className="system-center">
-              <Braces size={42} />
-              <span>Ideas → systems</span>
-            </div>
-            <div className="system-label label-backend">
-              <Terminal size={20} />
+              <strong>bhuvanshetty317@gmail.com</strong>
+            </a>
+            <a className="recent-work" href="#projects">
               <span>
-                Python backends<small>APIs & application logic</small>
+                RECENT WORK <ArrowDownRight size={16} />
               </span>
-            </div>
-            <div className="system-label label-ai">
-              <Workflow size={20} />
-              <span>
-                AI workflows<small>Agents & tool orchestration</small>
-              </span>
-            </div>
-            <div className="system-label label-rag">
-              <Database size={20} />
-              <span>
-                Retrieval systems<small>Context & evaluation</small>
-              </span>
-            </div>
-            <div className="system-bottom">
-              <span>clear inputs. thoughtful logic. useful outputs.</span>
-              <span>⌘</span>
-            </div>
+              <strong>AI TASKHUB</strong>
+            </a>
+            <a
+              href="#projects"
+              className="scroll-cue"
+              aria-label="Scroll to projects"
+            >
+              SCROLL TO EXPLORE ↓
+            </a>
           </div>
         </section>
-        <div className="stack-strip">
-          <div className="container">
-            <span className="strip-label">WORKING WITH</span>
-            {["Python", "FastAPI", "LangGraph", "Flask", "React", "SQL"].map(
-              (tech) => (
-                <span key={tech}>{tech}</span>
-              ),
-            )}
-          </div>
-        </div>
         <section
+          className="work-section"
           id="projects"
-          className="projects-section container"
-          aria-labelledby="projects-title"
+          aria-labelledby="work-title"
         >
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">SELECTED WORK / 01</p>
-              <h2 id="projects-title">Ideas, built into projects.</h2>
-            </div>
+          <div className="page-width work-heading" data-reveal>
+            <span className="section-marker">DEV / 01</span>
+            <h2 id="work-title">
+              selected
+              <br />
+              <span>works</span>
+              <sup>(06)</sup>
+            </h2>
             <p>
-              AI applications, backend services, and the algorithms underneath.
-              Explore the code behind each one.
+              AI applications. Backend systems.
+              <br />A little curiosity, built in Python.
             </p>
           </div>
-          <div className="project-toolbar">
-            <div className="filters" role="group" aria-label="Filter projects">
-              {filters.map((item) => (
+          <div className="page-width work-toolbar">
+            <div
+              className="project-filters"
+              role="group"
+              aria-label="Filter projects"
+            >
+              {filters.map((value) => (
                 <button
-                  key={item}
-                  aria-pressed={filter === item}
-                  onClick={() => setFilter(item)}
+                  key={value}
+                  aria-pressed={filter === value}
+                  onClick={() => selectFilter(value)}
                 >
-                  {item}
+                  {value}
                 </button>
               ))}
             </div>
             <span className="project-count" aria-live="polite">
-              {visible.length.toString().padStart(2, "0")} projects
+              {String(visible.length).padStart(2, "0")} projects
             </span>
           </div>
-          <div className="project-grid">
-            {visible.map((project) => (
-              <article className="project-card" key={project.repo}>
-                <ProjectVisual project={project} />
-                <div className="project-content">
-                  <p className="project-caption">{project.caption}</p>
-                  <div className="project-title">
-                    <h3>{project.name}</h3>
+          <div
+            className="work-track"
+            ref={gallery}
+            role="region"
+            aria-label="Project gallery"
+            tabIndex="0"
+          >
+            {visible.map((project, i) => (
+              <article className="work-card" key={project.repo}>
+                <ProjectArt project={project} />
+                <div className="work-card-meta">
+                  <span>
+                    {String(i + 1).padStart(2, "0")} /{" "}
                     <span>{project.kind}</span>
-                  </div>
-                  <p className="project-description">{project.description}</p>
-                  <ul
-                    className="tags"
-                    aria-label={`${project.name} technologies`}
-                  >
-                    {project.tech.map((tech) => (
-                      <li key={tech}>{tech}</li>
-                    ))}
-                  </ul>
+                  </span>
+                  <span>{project.tech.join(" / ")}</span>
+                </div>
+                <div className="work-card-title">
+                  <h3>{project.name}</h3>
                   <a
-                    className="project-source"
                     href={`${github}/${project.repo}`}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={`View ${project.name} source`}
                   >
-                    <Github size={16} /> View source <ArrowUpRight size={17} />
+                    <ArrowUpRight size={31} />
                   </a>
                 </div>
+                <p className="work-description">{project.description}</p>
               </article>
             ))}
           </div>
-          <a
-            className="all-repositories"
-            href={`${github}?tab=repositories`}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            More on GitHub <ArrowUpRight size={17} />
-          </a>
+          <div className="page-width gallery-footer">
+            <span>
+              SCROLL OR SWIPE TO DISCOVER <ArrowRight size={17} />
+            </span>
+            <div>
+              <button
+                aria-label="Previous projects"
+                onClick={() => shiftGallery(-1)}
+              >
+                <ArrowLeft />
+              </button>
+              <button
+                aria-label="Next projects"
+                onClick={() => shiftGallery(1)}
+              >
+                <ArrowRight />
+              </button>
+            </div>
+            <a
+              href={`${github}?tab=repositories`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              ALL REPOSITORIES ↗
+            </a>
+          </div>
         </section>
         <section
-          className="about-section"
           id="about"
+          className="about-section page-width"
           aria-labelledby="about-title"
         >
-          <div className="container about-grid">
-            <div className="about-profile">
-              <div className="portrait-wrap">
-                <img
-                  src={profile}
-                  alt="Bhuvan M"
-                  loading="lazy"
-                  width="360"
-                  height="400"
-                />
-                <span className="portrait-label">
-                  BHUVAN M / SOFTWARE ENGINEER
-                </span>
-              </div>
-            </div>
-            <div className="about-copy">
-              <p className="eyebrow">THE PERSON BEHIND THE CODE / 02</p>
-              <h2 id="about-title">
-                Curious by nature.
-                <br />
-                <span>Practical by design.</span>
-              </h2>
+          <div className="section-topline" data-reveal>
+            <span className="section-marker">DEV / 02</span>
+            <span>[ ABOUT ME ]</span>
+          </div>
+          <div className="about-intro" data-reveal>
+            <h2 id="about-title">
+              a human
+              <br />
+              behind the <em>logic.</em>
+            </h2>
+            <div>
+              <span className="small-label">HELLO, I'M BHUVAN M.</span>
               <p>
-                My work sits at the intersection of AI and software engineering.
-                I enjoy connecting language models to useful tools, building the
-                backend logic around them, and understanding how the pieces work
+                I work at the intersection of AI and software engineering.
+                Connecting language models to useful tools. Building the
+                application logic around them. Understanding how it all fits
                 together.
               </p>
-              <p>
-                Alongside Python and AI applications, my background includes
-                Java, Spring, Hibernate, and full-stack development. I bring
-                that foundation to projects with clear interfaces and purposeful
-                workflows.
-              </p>
-              <div className="capability-grid">
-                <div>
-                  <Workflow size={19} />
-                  <h3>Applied AI</h3>
-                  <p>RAG, LangGraph, LLM integration, prompt engineering</p>
-                </div>
-                <div>
-                  <Braces size={19} />
-                  <h3>Backend development</h3>
-                  <p>Python, FastAPI, Flask, Java, Spring, SQL</p>
-                </div>
-              </div>
-              <div className="education">
-                <span>EDUCATION</span>
-                <p>
-                  B.E. in Computer Science
-                  <br />
-                  <small>Sambhram Institute of Technology · 2020–2024</small>
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-        <section
-          className="contact-section container"
-          id="contact"
-          aria-labelledby="contact-title"
-        >
-          <div>
-            <p className="eyebrow">LET'S CONNECT / 03</p>
-            <h2 id="contact-title">
-              Have a role or
-              <br />
-              <span>an idea in mind?</span>
-            </h2>
-            <p>
-              Let's talk about AI applications, Python backends,
-              <br className="desktop-break" /> and building something useful
-              together.
-            </p>
-          </div>
-          <div className="contact-links">
-            <a
-              className="email-link"
-              href="mailto:bhuvanshetty317@gmail.com"
-              aria-label="Email Bhuvan"
-            >
-              <Mail size={21} />
-              <span>
-                <small>EMAIL ME</small>bhuvanshetty317@gmail.com
-              </span>
-              <ArrowUpRight size={24} />
-            </a>
-            <div className="social-links">
-              <a href={github} target="_blank" rel="noopener noreferrer">
-                <Github size={17} /> GitHub <ArrowUpRight size={17} />
-              </a>
               <a
-                href="https://www.linkedin.com/in/bhuvan-m-600828217/"
+                className="underlined-link"
+                href={github}
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Linkedin size={17} /> LinkedIn <ArrowUpRight size={17} />
+                MORE ON GITHUB <ArrowUpRight size={18} />
               </a>
             </div>
           </div>
+          <div className="about-principles" data-reveal>
+            <span>MY APPROACH</span>
+            <p>
+              Make it useful.
+              <br />
+              Keep it understandable.
+              <br />
+              <span>Know the tradeoffs.</span>
+            </p>
+            <div>
+              <p>
+                From RAG pipelines and agent workflows to API design and graph
+                search, I like turning complex ideas into software that makes
+                sense.
+              </p>
+              <p>
+                My foundation spans Python, Java, Spring, SQL, and full-stack
+                development. These projects are where I put that learning into
+                practice.
+              </p>
+            </div>
+          </div>
         </section>
+        <section
+          id="expertise"
+          className="expertise-section page-width"
+          aria-labelledby="expertise-title"
+        >
+          <div className="section-topline" data-reveal>
+            <span className="section-marker">DEV / 03</span>
+            <span>[ WHAT I WORK WITH ]</span>
+          </div>
+          <h2 id="expertise-title" data-reveal>
+            expertise<span> /</span>
+          </h2>
+          <div className="expertise-list">
+            {specialties.map((item, i) => (
+              <div
+                className={`expertise-item ${openSpecialty === i ? "is-open" : ""}`}
+                key={item.title}
+              >
+                <button
+                  aria-expanded={openSpecialty === i}
+                  aria-controls={`expertise-${i}`}
+                  onClick={() =>
+                    setOpenSpecialty(openSpecialty === i ? null : i)
+                  }
+                >
+                  <span className="expertise-number">00-{i + 1}</span>
+                  <span className="expertise-name">{item.title}</span>
+                  <span className="expertise-caption">{item.description}</span>
+                  {openSpecialty === i ? <Minus /> : <Plus />}
+                </button>
+                <div
+                  className="expertise-detail"
+                  id={`expertise-${i}`}
+                  hidden={openSpecialty !== i}
+                >
+                  <p>{item.details}</p>
+                  <div>
+                    {item.tags.map((tag) => (
+                      <span key={tag}>/ {tag}</span>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+        <footer
+          className="contact-section"
+          id="contact"
+          aria-labelledby="contact-title"
+        >
+          <div className="page-width">
+            <div className="section-topline">
+              <span className="section-marker">DEV / 04</span>
+              <span>[ LET'S CONNECT ]</span>
+            </div>
+            <p className="contact-preface">HAVE A ROLE OR AN IDEA IN MIND?</p>
+            <a
+              className="contact-title-link"
+              href="mailto:bhuvanshetty317@gmail.com"
+              aria-label="Email Bhuvan"
+            >
+              <h2 id="contact-title">let's talk.</h2>
+              <ArrowUpRight />
+            </a>
+            <div className="contact-details">
+              <a href="mailto:bhuvanshetty317@gmail.com">
+                bhuvanshetty317@gmail.com
+              </a>
+              <div>
+                <a href={github} target="_blank" rel="noopener noreferrer">
+                  [ GITHUB ↗ ]
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/bhuvan-m-600828217/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  [ LINKEDIN ↗ ]
+                </a>
+              </div>
+            </div>
+            <div className="footer-bottom">
+              <a className="footer-name" href="#home">
+                bhuvan m.
+              </a>
+              <span>PYTHON / AI / BACKEND</span>
+              <a href="#home">BACK TO TOP ↑</a>
+              <span>© 2026 BHUVAN M</span>
+            </div>
+          </div>
+        </footer>
       </main>
-      <footer className="container site-footer">
-        <a className="wordmark" href="#home">
-          <span className="brand-mark">b.</span>Bhuvan M
-        </a>
-        <p>Thoughtfully built. Always learning.</p>
-        <a href="#home">Back to top ↑</a>
-      </footer>
     </>
   );
 }

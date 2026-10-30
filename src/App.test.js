@@ -4,7 +4,7 @@ import App from "./App";
 test("shows project source links and accurate run modes", () => {
   render(<App />);
   expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
-    /AI systems/i,
+    /AI.*developer/i,
   );
   for (const [title, repository] of [
     ["AI TaskHub", "ai-taskhub"],
@@ -61,4 +61,25 @@ test("provides working section navigation and direct contact links", () => {
       .getAttribute("href");
     expect(document.querySelector(href)).toBeInTheDocument();
   }
+});
+
+test("menu supports navigation and escape dismissal", () => {
+  render(<App />);
+  fireEvent.click(screen.getByRole("button", { name: "Open menu" }));
+  expect(screen.getByRole("dialog", { name: "Site menu" })).toBeInTheDocument();
+  fireEvent.keyDown(document, { key: "Escape" });
+  expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+});
+
+test("expertise details expand with accessible state", () => {
+  render(<App />);
+  const trigger = screen.getByRole("button", { name: /Python backends/i });
+  expect(trigger).toHaveAttribute("aria-expanded", "false");
+  fireEvent.click(trigger);
+  expect(trigger).toHaveAttribute("aria-expanded", "true");
+  expect(
+    screen.getByText(
+      /Request validation, authentication, and background processing/i,
+    ),
+  ).toBeVisible();
 });

@@ -6,13 +6,13 @@
 }
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 95px;
+  scroll-padding-top: 32px;
 }
 body {
   margin: 0;
-  background: #111411;
-  color: #f1f2e9;
-  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  background: #f7f7f7;
+  color: #101010;
+  font-family: "Spline Sans Mono", monospace;
   -webkit-font-smoothing: antialiased;
 }
 a {
@@ -21,22 +21,22 @@ a {
 }
 button {
   font: inherit;
+  color: inherit;
+  cursor: pointer;
 }
 button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
 button:focus-visible,
-a:focus-visible {
-  outline: 2px solid #c4f170;
-  outline-offset: 5px;
+a:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 6px;
 }
 ::selection {
-  background: #c4f170;
-  color: #151a12;
-}
-button {
-  cursor: pointer;
+  background: #101010;
+  color: #f7f7f7;
 }
 svg {
   flex-shrink: 0;
@@ -44,11 +44,13 @@ svg {
 h1,
 h2,
 h3,
-p {
+h4,
+p,
+figure {
   margin: 0;
 }
-section {
-  scroll-margin-top: 30px;
+button {
+  border-radius: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   html {
