@@ -1,6 +1,32 @@
 export const github = "https://github.com/BhuvanM17";
 export const projects = [
   {
+    name: "InterviewGraph",
+    category: "AI applications",
+    kind: "AI practice tool",
+    repo: "interviewgraph",
+    description:
+      "An interview coach that evaluates answers, asks a targeted follow-up, and advances through Python and GenAI questions using a real LangGraph workflow. Includes saved sessions, reports, and optional Gemini feedback.",
+    tech: ["LangGraph", "LangChain", "FastAPI", "SQLite"],
+    visual: "interview",
+    caption: "01 / HUMAN + AI WORKFLOWS",
+    code: ["evaluate", "follow up", "advance"],
+  },
+  {
+    name: "Weekend Payana",
+    category: "Web applications",
+    kind: "Client project",
+    repo: "weekend-payana",
+    sourceUrl: null,
+    liveUrl: "https://www.weekendpayana.com/",
+    description:
+      "A travel platform for discovering treks and booking weekend getaways. My work spans booking and payment flows, invoice exports, and admin tools—connecting customer journeys with day-to-day operations.",
+    tech: ["React", "Firebase", "Razorpay", "Vercel"],
+    visual: "travel",
+    caption: "02 / CLIENT WEB APPLICATION",
+    code: ["discover", "book", "explore"],
+  },
+  {
     name: "AI TaskHub",
     category: "Backend & APIs",
     kind: "Backend service",
@@ -77,5 +103,7 @@ export const filters = [
   "All projects",
   "AI applications",
   "Backend & APIs",
+  "Web applications",
   "Python & algorithms",
 ];
+

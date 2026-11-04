@@ -83,3 +83,27 @@ test("expertise details expand with accessible state", () => {
     ),
   ).toBeVisible();
 });
+
+test("features InterviewGraph and links client work to its live website", () => {
+  render(<App />);
+  expect(screen.getByRole("link", { name: "View InterviewGraph source" })).toHaveAttribute(
+    "href", "https://github.com/BhuvanM17/interviewgraph",
+  );
+  const weekend = screen.getByRole("heading", { name: "Weekend Payana" }).closest("article");
+  expect(within(weekend).getByRole("link", { name: "View Weekend Payana website" })).toHaveAttribute(
+    "href", "https://www.weekendpayana.com/",
+  );
+  expect(within(weekend).queryByRole("link", { name: /source/i })).not.toBeInTheDocument();
+  expect(screen.getByText("08 projects")).toBeInTheDocument();
+});
+
+test("web application filter isolates client work and restores AI projects", () => {
+  render(<App />);
+  fireEvent.click(screen.getByRole("button", { name: "Web applications" }));
+  expect(screen.getByRole("heading", { name: "Weekend Payana" })).toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: "InterviewGraph" })).not.toBeInTheDocument();
+  fireEvent.click(screen.getByRole("button", { name: "AI applications" }));
+  expect(screen.getByRole("heading", { name: "InterviewGraph" })).toBeInTheDocument();
+  expect(screen.queryByRole("heading", { name: "Weekend Payana" })).not.toBeInTheDocument();
+});
+

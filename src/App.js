@@ -45,6 +45,13 @@ const specialties = [
   },
 ];
 
+const stack = [
+  ["Python", "python"], ["FastAPI", "fastapi"], ["Flask", "flask"], ["React", "react"],
+  ["JavaScript", "js"], ["Java", "java"], ["MySQL", "mysql"], ["SQLite", "sqlite"],
+  ["Git", "git"], ["GitHub", "github"], ["GitLab", "gitlab"], ["Postman", "postman"],
+  ["AWS", "aws"], ["Firebase", "firebase"], ["Vercel", "vercel"], ["VS Code", "vscode"],
+];
+
 function useReveals() {
   useEffect(() => {
     if (
@@ -74,6 +81,36 @@ function useReveals() {
 }
 
 function ProjectArt({ project }) {
+  if (project.visual === "interview")
+    return (
+      <div className="project-art interview-art" aria-hidden="true">
+        <div className="coach-window">
+          <div className="coach-window-bar"><span>interviewgraph</span><span>PYTHON + GENAI</span></div>
+          <small>MAKE YOUR THINKING VISIBLE.</small>
+          <h4>Explain it.<br /><em>Then improve it.</em></h4>
+          <div className="coach-answer"><span>YOUR ANSWER</span><i /><i /><i /></div>
+          <div className="coach-flow"><b>evaluate</b><span>→</span><b>follow up</b><span>→</span><b>next question</b></div>
+          <p>A real LangGraph workflow. One answer at a time.</p>
+        </div>
+      </div>
+    );
+  if (project.visual === "travel")
+    return (
+      <div className="project-art travel-art" aria-hidden="true">
+        <svg className="travel-landscape" viewBox="0 0 900 720" preserveAspectRatio="xMidYMid slice">
+          <defs><linearGradient id="travel-sky" x2="0" y2="1"><stop stopColor="#d9e7da"/><stop offset="1" stopColor="#8fab92"/></linearGradient></defs>
+          <rect width="900" height="720" fill="url(#travel-sky)" />
+          <circle cx="695" cy="159" r="63" fill="#f5eed8" />
+          <path d="M0 450 140 215 312 416 460 145 705 437 900 260V720H0Z" fill="#789780" />
+          <path d="M0 540 200 348 380 543 570 310 760 515 900 441V720H0Z" fill="#476c58" />
+          <path d="M0 632 188 490 418 648 600 469 900 627V720H0Z" fill="#264c3b" />
+          <path d="M510 720Q460 637 526 570T580 499" fill="none" stroke="#d7d8af" strokeWidth="8" strokeDasharray="6 13" />
+        </svg>
+        <div className="travel-brand"><span>WEEKEND<br />PAYANA<span className="travel-brand-dot">.</span></span><small>CLIENT WEB APPLICATION</small></div>
+        <div className="travel-headline"><h4>Step out.<br /><em>Explore more.</em></h4><span>BENGALURU / WEEKEND GETAWAYS</span></div>
+        <div className="travel-ticket"><div><small>THE CUSTOMER JOURNEY</small><p>Discover → Book → Explore</p></div><span>↗</span></div>
+      </div>
+    );
   if (project.visual === "maze")
     return (
       <div className="project-art game-art">
@@ -353,7 +390,7 @@ function App() {
               <span>
                 RECENT WORK <ArrowDownRight size={16} />
               </span>
-              <strong>AI TASKHUB</strong>
+              <strong>{projects[0].name.toUpperCase()}</strong>
             </a>
             <a
               href="#projects"
@@ -375,11 +412,11 @@ function App() {
               selected
               <br />
               <span>works</span>
-              <sup>(06)</sup>
+              <sup>({String(projects.length).padStart(2, "0")})</sup>
             </h2>
             <p>
-              AI applications. Backend systems.
-              <br />A little curiosity, built in Python.
+              AI workflows. Python backends.
+              <br />Client products, built for real use.
             </p>
           </div>
           <div className="page-width work-toolbar">
@@ -422,11 +459,12 @@ function App() {
                 <div className="work-card-title">
                   <h3>{project.name}</h3>
                   <a
-                    href={`${github}/${project.repo}`}
+                    href={project.liveUrl || project.sourceUrl || `${github}/${project.repo}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`View ${project.name} source`}
+                    aria-label={`View ${project.name} ${project.liveUrl ? "website" : "source"}`}
                   >
+                    <span className="project-link-label">{project.liveUrl ? "WEBSITE" : "SOURCE"}</span>
                     <ArrowUpRight size={31} />
                   </a>
                 </div>
@@ -514,6 +552,20 @@ function App() {
                 development. These projects are where I put that learning into
                 practice.
               </p>
+            </div>
+          </div>
+          <div className="stack-section">
+            <div className="stack-intro"><span className="small-label">THE TOOLS BEHIND THE WORK</span><h3>My everyday<br /><em>toolkit.</em></h3><p>Python at the center.<br />The right tools around it.</p></div>
+            <div className="stack-board-wrap">
+              <ul className="stack-board" aria-label="Technology stack">
+                {stack.map(([name, icon]) => (
+                  <li className="stack-key" key={name}>
+                    <img src={`https://skillicons.dev/icons?i=${icon}&theme=dark`} alt="" width="42" height="42" loading="lazy" />
+                    <span>{name}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="stack-ai-tools">LANGCHAIN <span>/</span> LANGGRAPH <span>/</span> GEMINI <span>/</span> CHROMADB <span>/</span> RAG</p>
             </div>
           </div>
         </section>
@@ -614,3 +666,4 @@ function App() {
   );
 }
 export default App;
+

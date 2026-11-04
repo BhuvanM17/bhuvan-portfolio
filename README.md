@@ -6,6 +6,8 @@ A monochrome, typography-led portfolio focused on AI applications, backend engin
 
 ## Selected work
 
+- [InterviewGraph](https://github.com/BhuvanM17/interviewgraph): LangGraph interview practice with saved sessions, targeted follow-ups, reports, demo scoring, and optional Gemini feedback.
+- [Weekend Payana](https://www.weekendpayana.com/): a client travel website with trip discovery, booking/payment flows, invoice exports, and admin tools. This card links to the public website; the client source is private.
 - [AI TaskHub](https://github.com/BhuvanM17/ai-taskhub): authenticated FastAPI background jobs with PostgreSQL and Redis/RQ.
 - [RetrievalBench](https://github.com/BhuvanM17/retrievalbench): offline RAG retrieval evaluation with a BM25 baseline. Run locally as a Python CLI.
 - [GridQuest](https://github.com/BhuvanM17/gridquest-python): a local Pygame maze game with procedural generation and BFS pursuit.
@@ -39,4 +41,5 @@ The tests cover project links and type labels, category filtering, and navigatio
 
 The editorial layout is inspired by [Olha Lazarieva's portfolio](https://www.awwwards.com/sites/olha-lazarieva): oversized condensed type, a monochrome portrait, bracket navigation, and generous whitespace. This is an original adaptation with Bhuvan's own public photo, project content, and original project artwork. No reference-site photos, awards, or copy are reused.
 
-Includes a swipeable horizontal project gallery, category filters, keyboard-accessible mobile menu, expandable expertise details, and reduced-motion support. Fonts are self-hosted through Fontsource. See [design evidence and implementation choices](docs/DESIGN.md).
+Includes a swipeable gallery with eight projects, category filters, a keyboard-accessible mobile menu, expandable expertise details, and reduced-motion support. The technology board uses labeled keycaps and [Skill Icons](https://skillicons.dev), inspired by the tech tiles on the user's supplied [GitHub reference](https://github.com/sharath-a-kumar). Fonts are self-hosted through Fontsource. See [design evidence and implementation choices](docs/DESIGN.md).
+
