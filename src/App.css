@@ -21,7 +21,7 @@
 .coach-window > p { font-size: 6px; color: #8c9881; margin-top: 13px; }
 .travel-art { background: #799781; color: #142d21; }
 .travel-landscape { position: absolute; width: 100%; height: 100%; inset: 0; }
-.travel-brand { position: absolute; left: 35px; right: 35px; top: 29px; display: flex; justify-content: space-between; align-items: start; }
+.travel-brand { position: absolute; left: 35px; right: 35px; top: 29px; display: flex; justify-content: space-between; align-items: flex-start; }
 .travel-brand > span { font: 800 24px/.8 var(--display); letter-spacing: -1px; }
 .travel-brand-dot { color: #c07144; }.travel-brand small { font-size: 7px; letter-spacing: 1px; }
 .travel-headline { position: absolute; left: 10%; top: 28%; }
@@ -228,7 +228,7 @@
 .hero-bottom {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  align-items: end;
+  align-items: flex-end;
   margin-top: 32px;
   gap: 20px;
   font-size: 10px;
@@ -277,7 +277,7 @@
   display: grid;
   grid-template-columns: 1fr 7fr 4fr;
   gap: 25px;
-  align-items: end;
+  align-items: flex-end;
 }
 .section-marker {
   font-size: 10px;
@@ -629,7 +629,7 @@
   display: grid;
   grid-template-columns: 7fr 4fr;
   gap: 8%;
-  align-items: end;
+  align-items: flex-end;
   margin-top: 65px;
 }
 .about-intro h2 {
@@ -665,7 +665,7 @@
   grid-template-columns: 2fr 5fr 4fr;
   gap: 5%;
   margin-top: 110px;
-  align-items: start;
+  align-items: flex-start;
   border-top: 1px solid var(--line);
   padding-top: 26px;
 }
@@ -1066,7 +1066,7 @@
   }
   .work-toolbar {
     margin-top: 35px;
-    align-items: start;
+    align-items: flex-start;
   }
   .project-filters {
     gap: 8px 16px;
@@ -1269,7 +1269,7 @@
     height: 17vw;
   }
   .contact-details {
-    align-items: start;
+    align-items: flex-start;
     flex-direction: column;
     font-size: 11px;
     gap: 25px;
